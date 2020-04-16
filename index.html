@@ -248,18 +248,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="汇总帖"><a href="#汇总帖" class="headerlink" title="汇总帖"></a>汇总帖</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/31877891" target="_blank" rel="noopener">github pages 如何加密</a><br><code>很简单的一个操作，打开主题文件夹/layout/_partials/head.swig
-在首句&lt;meta charset=&quot;UTF-8&quot;/&gt;后面插入以下代码:</code></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    (function()&#123;</span><br><span class="line">        if(&#39;&#123;&#123; page.password &#125;&#125;&#39;)&#123;</span><br><span class="line">            if (prompt(&#39;请输入文章密码&#39;) !&#x3D;&#x3D; &#39;&#123;&#123; page.password &#125;&#125;&#39;)&#123;</span><br><span class="line">                alert(&#39;密码错误&#39;);</span><br><span class="line">                history.back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<ol start="2">
-<li><a href="https://github.com/MikeCoder/hexo-blog-encrypt/blob/master/ReadMe.zh.md" target="_blank" rel="noopener"></a><br>安装：<br><code>npm install --save hexo-blog-encrypt</code></li>
-</ol>
-<p>根目录：config.yml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Security</span><br><span class="line">encrypt: # hexo-blog-encrypt</span><br><span class="line">  abstract: 有东西被加密了, 请输入密码查看.</span><br><span class="line">  message: 您好, 这里需要密码.</span><br><span class="line">  tags:</span><br><span class="line">  - &#123;name: tagName, password: 密码A&#125;</span><br><span class="line">  - &#123;name: tagName, password: 密码B&#125;</span><br><span class="line">  template: &lt;div id&#x3D;&quot;hexo-blog-encrypt&quot; data-wpm&#x3D;&quot;&#123;&#123;hbeWrongPassMessage&#125;&#125;&quot; data-whm&#x3D;&quot;&#123;&#123;hbeWrongHashMessage&#125;&#125;&quot;&gt;&lt;div class&#x3D;&quot;hbe-input-container&quot;&gt;&lt;input type&#x3D;&quot;password&quot; id&#x3D;&quot;hbePass&quot; placeholder&#x3D;&quot;&#123;&#123;hbeMessage&#125;&#125;&quot; &#x2F;&gt;&lt;label&gt;&#123;&#123;hbeMessage&#125;&#125;&lt;&#x2F;label&gt;&lt;div class&#x3D;&quot;bottom-line&quot;&gt;&lt;&#x2F;div&gt;&lt;&#x2F;div&gt;&lt;script id&#x3D;&quot;hbeData&quot; type&#x3D;&quot;hbeData&quot; data-hmacdigest&#x3D;&quot;&#123;&#123;hbeHmacDigest&#125;&#125;&quot;&gt;&#123;&#123;hbeEncryptedData&#125;&#125;&lt;&#x2F;script&gt;&lt;&#x2F;div&gt;</span><br><span class="line">  wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试.</span><br><span class="line">  wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.</span><br></pre></td></tr></table></figure>
-
+        Blog verrouillé.
+        
+          <a class="article-more-a" href="/2020/04/16/%E7%BD%91%E7%AB%99%E6%B1%87%E6%80%BB/#more">more >></a>
+        
       
 
       
@@ -271,6 +263,10 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">locked</a>
+        		</li>
+      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网站汇总</a>
         		</li>
