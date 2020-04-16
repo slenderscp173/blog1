@@ -16,7 +16,7 @@
 <meta property="og:description" content="量化投资的常见基本策略1.动量投资2.均值回归3.投资者情绪策略4.市场中性投资 Quantopian提供的数据美国股票和ETF期货数据stockTwits交易员情绪数据统计公司收益公布数据机器学习预测股票收益数据新闻分析情绪数据并购收购数据美国通胀率数据57+机构质量数据 平台研究平台：Research is a Jupyter Notebook environment that allows">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-16T11:44:55.000Z">
-<meta property="article:modified_time" content="2020-04-16T13:24:16.751Z">
+<meta property="article:modified_time" content="2020-04-16T13:27:08.194Z">
 <meta property="article:author" content="slenderscp173">
 <meta property="article:tag" content="alphalens">
 <meta name="twitter:card" content="summary">
@@ -62,7 +62,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">code</a></li>
 	        
 			</ul>
 		</nav>
@@ -140,7 +140,7 @@
 				
 					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">code</a></li>
 		        
 				</ul>
 			</nav>
@@ -175,9 +175,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="量化投资的常见基本策略"><a href="#量化投资的常见基本策略" class="headerlink" title="量化投资的常见基本策略"></a>量化投资的常见基本策略</h1><p>1.动量投资<br>2.均值回归<br>3.投资者情绪策略<br>4.市场中性投资</p>
-<h1 id="Quantopian提供的数据"><a href="#Quantopian提供的数据" class="headerlink" title="Quantopian提供的数据"></a>Quantopian提供的数据</h1><p>美国股票和ETF<br>期货数据<br>stockTwits交易员情绪数据统计<br>公司收益公布数据<br>机器学习预测股票收益数据<br>新闻分析情绪数据<br>并购收购数据<br>美国通胀率数据<br>57+机构质量数据</p>
-<h1 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h1><p>研究平台：Research is a Jupyter Notebook environment that allows us to run Python.<br>示例：</p>
+        <h3 id="量化投资的常见基本策略"><a href="#量化投资的常见基本策略" class="headerlink" title="量化投资的常见基本策略"></a>量化投资的常见基本策略</h3><p>1.动量投资<br>2.均值回归<br>3.投资者情绪策略<br>4.市场中性投资</p>
+<h3 id="Quantopian提供的数据"><a href="#Quantopian提供的数据" class="headerlink" title="Quantopian提供的数据"></a>Quantopian提供的数据</h3><p>美国股票和ETF<br>期货数据<br>stockTwits交易员情绪数据统计<br>公司收益公布数据<br>机器学习预测股票收益数据<br>新闻分析情绪数据<br>并购收购数据<br>美国通胀率数据<br>57+机构质量数据</p>
+<h3 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h3><p>研究平台：Research is a Jupyter Notebook environment that allows us to run Python.<br>&lt;示例&gt;</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># Research environment functions</span><br><span class="line">from quantopian.research import prices, symbols</span><br><span class="line"></span><br><span class="line"># Pandas library: https:&#x2F;&#x2F;pandas.pydata.org&#x2F;</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># Query historical pricing data for AAPL</span><br><span class="line">aapl_close &#x3D; prices(</span><br><span class="line">    assets&#x3D;symbols(&#39;AAPL&#39;),</span><br><span class="line">    start&#x3D;&#39;2013-01-01&#39;,</span><br><span class="line">    end&#x3D;&#39;2016-01-01&#39;,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Compute 20 and 50 day moving averages on</span><br><span class="line"># AAPL&#39;s pricing data</span><br><span class="line">aapl_sma20 &#x3D; aapl_close.rolling(20).mean()</span><br><span class="line">aapl_sma50 &#x3D; aapl_close.rolling(50).mean()</span><br><span class="line"></span><br><span class="line"># Combine results into a pandas DataFrame and plot</span><br><span class="line">pd.DataFrame(&#123;   </span><br><span class="line">    &#39;AAPL&#39;: aapl_close,</span><br><span class="line">    &#39;SMA20&#39;: aapl_sma20,</span><br><span class="line">    &#39;SMA50&#39;: aapl_sma50</span><br><span class="line">&#125;).plot(</span><br><span class="line">    title&#x3D;&#39;AAPL Close Price &#x2F; SMA Crossover&#39;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>回测：</p>
@@ -351,7 +351,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -477,7 +477,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+              <a href="https://www.ricequant.com/quant/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Ricequant</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.quantopian.com/docs/index" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Quantopian</a>
             </li>
           
         </ul>
@@ -488,7 +492,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">never stop &lt;br&gt; &lt;br&gt; 山在那里 &lt;br&gt; finance &amp; python &lt;br&gt; e-mail:slenderscp173@163.com</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">never stop &lt;br&gt; finance &amp; python &lt;br&gt; 山在那里 &lt;br&gt; &lt;br&gt; e-mail:slenderscp173@163.com</div>
   	  	
     	</section>
     
