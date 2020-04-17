@@ -178,8 +178,29 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def func(n, res&#x3D;1):</span><br><span class="line">    if n &#x3D;&#x3D; 0:</span><br><span class="line">        return res</span><br><span class="line">    return func(n - 1, n * res)</span><br></pre></td></tr></table></figure>
 <p>但是python的编译器不支持深度的尾递归，仍会报错。<br>解决办法二：写一个装饰器捕获异常</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import sys  </span><br><span class="line"></span><br><span class="line">class TailRecurseException(BaseException):  </span><br><span class="line">   def __init__(self, args, kwargs):  </span><br><span class="line">     self.args &#x3D; args  </span><br><span class="line">     self.kwargs &#x3D; kwargs  </span><br><span class="line"></span><br><span class="line">def tail_call_optimized(g):   </span><br><span class="line">   def func(*args, **kwargs):  </span><br><span class="line">     f &#x3D; sys._getframe()  </span><br><span class="line">     if f.f_back and f.f_back.f_back and f.f_back.f_back.f_code &#x3D;&#x3D; f.f_code:  </span><br><span class="line">       raise TailRecurseException(args, kwargs)  </span><br><span class="line">     else:  </span><br><span class="line">       while 1:  </span><br><span class="line">         try:  </span><br><span class="line">           return g(*args, **kwargs)  </span><br><span class="line">         except TailRecurseException as e:  </span><br><span class="line">           args &#x3D; e.args  </span><br><span class="line">           kwargs &#x3D; e.kwargs  </span><br><span class="line">   func.__doc__ &#x3D; g.__doc__  </span><br><span class="line">   return func  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@tail_call_optimized</span><br><span class="line">def fact(n, tot &#x3D; 1):</span><br><span class="line">    if n &#x3D;&#x3D;1:</span><br><span class="line">        print(&quot;fact(1) &#x3D;&#x3D;&gt; 1&quot;)</span><br><span class="line">        return tot</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;fact(&quot;+str(n)+&quot;)&quot;, &quot;&#x3D;&#x3D;&gt;&quot;, str(n)+&quot; * fact(&quot;+str(n-1)+&quot;)&quot;)</span><br><span class="line">        return fact(n-1, n*tot)</span><br></pre></td></tr></table></figure>
-<hr>
 
+<hr>
+<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>1.面向过程：</p>
+<ul>
+<li>将独立的功能代码封装成不同的函数</li>
+<li>顺序的调用不同函数</li>
+</ul>
+<p>2.面向对象：</p>
+<ul>
+<li>很少会出现函数你调我，我调你的现象</li>
+<li>确定<code>职责</code>：要做的事（方法）</li>
+<li>根据职责确定<code>不同的对象</code>，在对象内部封装不同的方法（多个）</li>
+<li>最后：顺序但独立地让不同的对象调用不同的方法</li>
+</ul>
+<h4 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h4><p>类：（飞机模板）</p>
+<ul>
+<li>特征=属性</li>
+<li>行为=方法</li>
+<li>负责创建对象<br>对象：（模板创建的飞机）</li>
+<li>根据类图纸创建出来的</li>
+</ul>
+<p>类只有一个，对象可以由很多个。不同对象之间的属性可能会各不相同（如：飞机的颜色不同）。<br>类中有什么属性和方法，对象就有什么样的属性与方法。当对象创建出来后，可以申明其调用的不同的属性。</p>
+<h4 id="类的创建："><a href="#类的创建：" class="headerlink" title="类的创建："></a>类的创建：</h4>
       
 
       
