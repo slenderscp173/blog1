@@ -345,7 +345,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="python递归"><a href="#python递归" class="headerlink" title="python递归"></a>python递归</h2><p>普通递归:</p>
+        <p>[toc]</p>
+<h2 id="python递归"><a href="#python递归" class="headerlink" title="python递归"></a>python递归</h2><p>普通递归:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def func(n):</span><br><span class="line">    if n &#x3D;&#x3D; 0:</span><br><span class="line">        return 1</span><br><span class="line">    return func(n - 1) * n</span><br></pre></td></tr></table></figure>
 <p>尾递归:如果一个函数中所有递归形式的调用都出现在函数的末尾，我们称这个递归函数是尾递归的。 当递归调用是整个函数体中最后执行的语句且它的返回值不属于表达式的一部分时，这个递归调用就是尾递归。尾递归函数的特点是在回归过程中不用做任何操作，这个特性很重要，因为大多数现代的编译器会利用这种特点自动生成优化的代码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def func(n, res&#x3D;1):</span><br><span class="line">    if n &#x3D;&#x3D; 0:</span><br><span class="line">        return res</span><br><span class="line">    return func(n - 1, n * res)</span><br></pre></td></tr></table></figure>
