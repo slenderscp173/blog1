@@ -16,7 +16,7 @@
 <meta property="og:description" content="overview    Country Country Code Pipeline Domain Supported Exchanges     China CN CN_EQUITIES Shenzhen Stock Exchange, Shanghai Stock Exchange   United States US US_EQUITIES NYSE, NASDAQ, AMEX   Franc">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-19T23:16:10.000Z">
-<meta property="article:modified_time" content="2020-04-20T00:15:39.648Z">
+<meta property="article:modified_time" content="2020-04-20T08:10:35.121Z">
 <meta property="article:author" content="slenderscp173">
 <meta property="article:tag" content="quant">
 <meta property="article:tag" content="study">
@@ -238,13 +238,14 @@ Update Frequency: Daily (updated overnight after each trading day).<br>
 Timespan: 2004-01-01 to present.<br>
 Holdout (US only): None<br>
 Holdout (non-US): 1 year</p>
-<p>Prices are adjusted for events like splits, dividends, and spinoffs to correct for ‘jumps’ in prices that don’t actually reflect changes in the equity’s value. To avoid lookahead bias, Quantopian prices are adjusted point-in-time.</p>
+<p>Adjustement:<br>
+Prices are adjusted for events like splits, dividends, and spinoffs to correct for ‘jumps’ in prices that don’t actually reflect changes in the equity’s value. To avoid lookahead bias, Quantopian prices are adjusted point-in-time.</p>
 <blockquote>
-<p>Daily pricing data is accessible via the EquityPricing pipeline DataSet.</p>
+<p>Daily pricing data is accessible via the EquityPricing pipeline DataSet.<br>
+from quantopian.pipeline.data import EquityPricing</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline.data import EquityPricing</span><br></pre></td></tr></table></figure>
 <h3 id="Exemple">Exemple:</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline import Pipeline</span><br><span class="line">from quantopian.pipeline.data import EquityPricing #&#x3D;&#x3D;&gt;导入EquityPricing</span><br><span class="line">from quantopian.pipeline.domain import US_EQUITIES #导入目标国家US数据</span><br><span class="line">from quantopian.research import run_pipeline</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline import Pipeline</span><br><span class="line">from quantopian.pipeline.data import EquityPricing #导入!</span><br><span class="line">from quantopian.pipeline.domain import US_EQUITIES #导入目标国家US数据</span><br><span class="line">from quantopian.research import run_pipeline</span><br></pre></td></tr></table></figure>
 <p>Get the latest daily close price for all equities.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yesterday_close &#x3D; EquityPricing.close.latest</span><br></pre></td></tr></table></figure>
 <p>Get the latest daily trading &lt; volume &gt; for all equities.</p>
@@ -254,7 +255,7 @@ to be US_EQUITIES.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pipe &#x3D; Pipeline(</span><br><span class="line">    columns&#x3D;&#123;</span><br><span class="line">        &#39;close&#39;: yesterday_close,</span><br><span class="line">        &#39;volume&#39;: yesterday_volume,</span><br><span class="line">    &#125;,</span><br><span class="line">    domain&#x3D;US_EQUITIES,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>Run the pipeline over a one year period and print the output.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df &#x3D; run_pipeline(pipe, &#39;2015-05-05&#39;, &#39;2016-05-05&#39;)</span><br><span class="line">print(df.head())</span><br></pre></td></tr></table></figure>
-<h2 id="Fields">Fields</h2>
+<h3 id="Fields">Fields</h3>
 <p>The EquityPricing dataset has 5 fields (accessible as BoundColumn attributes): close, open, high, low, volume.</p>
 <ul>
 <li>close (dtype float64) - Price at market close.</li>
@@ -401,7 +402,7 @@ currency (dtype str) - ISO code representing the default currency of all price f
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#overview"><span class="toc-number">1.</span> <span class="toc-text">overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Daily-pricing-volume"><span class="toc-number">2.</span> <span class="toc-text">Daily pricing &amp; volume</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Exemple"><span class="toc-number">2.1.</span> <span class="toc-text">Exemple:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fields"><span class="toc-number">3.</span> <span class="toc-text">Fields</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#overview"><span class="toc-number">1.</span> <span class="toc-text">overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Daily-pricing-volume"><span class="toc-number">2.</span> <span class="toc-text">Daily pricing &amp; volume</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Exemple"><span class="toc-number">2.1.</span> <span class="toc-text">Exemple:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fields"><span class="toc-number">2.2.</span> <span class="toc-text">Fields</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
