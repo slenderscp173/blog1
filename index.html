@@ -239,15 +239,27 @@ Holdout (non-US): 1 year</p>
 <p>Daily pricing data is accessible via the EquityPricing pipeline DataSet.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline.data import EquityPricing</span><br></pre></td></tr></table></figure>
-<p>Exemple:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline import Pipeline</span><br><span class="line">from quantopian.pipeline.data import EquityPricing #导入EquityPricing</span><br><span class="line">from quantopian.pipeline.domain import US_EQUITIES #导入国家US数据</span><br><span class="line">from quantopian.research import run_pipeline</span><br></pre></td></tr></table></figure>
-<h1>Get the latest daily close price for all equities.</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line"># Get the latest daily trading &lt; volume &gt; for all equities.</span><br><span class="line">&#96;&#96;&#96;yesterday_volume &#x3D; EquityPricing.volume.latest</span><br></pre></td></tr></table></figure>
-<h1>Add our data columns to our pipeline and specifies the domain</h1>
-<h1>to be US_EQUITIES.</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    columns&#x3D;&#123;</span><br><span class="line">        &#39;close&#39;: yesterday_close,</span><br><span class="line">        &#39;volume&#39;: yesterday_volume,</span><br><span class="line">    &#125;,</span><br><span class="line">    domain&#x3D;US_EQUITIES,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h1>Run the pipeline over a one year period and print the output.</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(df.head())</span><br></pre></td></tr></table></figure>
+<h3 id="Exemple">Exemple:</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline import Pipeline</span><br><span class="line">from quantopian.pipeline.data import EquityPricing #&#x3D;&#x3D;&gt;导入EquityPricing</span><br><span class="line">from quantopian.pipeline.domain import US_EQUITIES #导入目标国家US数据</span><br><span class="line">from quantopian.research import run_pipeline</span><br></pre></td></tr></table></figure>
+<p>Get the latest daily close price for all equities.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yesterday_close &#x3D; EquityPricing.close.latest</span><br></pre></td></tr></table></figure>
+<p>Get the latest daily trading &lt; volume &gt; for all equities.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yesterday_volume &#x3D; EquityPricing.volume.latest</span><br></pre></td></tr></table></figure>
+<p>Add our data columns to our pipeline and specifies the domain<br>
+to be US_EQUITIES.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pipe &#x3D; Pipeline(</span><br><span class="line">    columns&#x3D;&#123;</span><br><span class="line">        &#39;close&#39;: yesterday_close,</span><br><span class="line">        &#39;volume&#39;: yesterday_volume,</span><br><span class="line">    &#125;,</span><br><span class="line">    domain&#x3D;US_EQUITIES,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Run the pipeline over a one year period and print the output.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df &#x3D; run_pipeline(pipe, &#39;2015-05-05&#39;, &#39;2016-05-05&#39;)</span><br><span class="line">print(df.head())</span><br></pre></td></tr></table></figure>
+<h2 id="Fields">Fields</h2>
+<p>The EquityPricing dataset has 5 fields (accessible as BoundColumn attributes): close, open, high, low, volume.</p>
+<ul>
+<li>close (dtype float64) - Price at market close.</li>
+<li>open (dtype float64) - Price at market open. Note that an EquityPricing.open.latest pipeline factor executed on day N gets the open price from day N-1. This is true for virtually all pipeline datasets but can sometimes be unexpected for open price.</li>
+<li>high (dtype float64) - Highest price reached by the equity throughout the day.</li>
+<li>low (dtype float64) - Lowest price reached by the equity throughout the day.</li>
+<li>volume (dtype float64) - Number of shares traded.<br>
+currency (dtype str) - ISO code representing the default currency of all price fields on this dataset.</li>
+</ul>
 
       
 
