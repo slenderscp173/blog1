@@ -16,7 +16,7 @@
 <meta property="og:description" content="创建 1.install : node.js Voici lien de node.js: node.js download 2.install : npm Taper ces codes dans le terminal: sudo npm install -g hexo 3.install: git install git git -version 4.[initialisation] run">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-16T09:42:44.000Z">
-<meta property="article:modified_time" content="2020-04-23T22:26:56.664Z">
+<meta property="article:modified_time" content="2020-04-23T22:38:48.680Z">
 <meta property="article:author" content="slenderscp173">
 <meta property="article:tag" content="blog">
 <meta property="article:tag" content="github pages">
@@ -63,9 +63,9 @@
 			
 				<li><a href="/">home</a></li>
 	        
-				<li><a href="/code/">code</a></li>
+				<li><a href="/categories/code/">code</a></li>
 	        
-				<li><a href="/CV/">CV</a></li>
+				<li><a href="/categories/CV/">CV</a></li>
 	        
 			</ul>
 		</nav>
@@ -145,9 +145,9 @@
 				
 					<li style="width: 33.333333333333336%"><a href="/">home</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/code/">code</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories/code/">code</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/CV/">CV</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories/CV/">CV</a></li>
 		        
 				</ul>
 			</nav>
@@ -196,11 +196,19 @@ Taper ces codes dans le terminal:<br>
 <code>npx hexo init</code></p>
 <h4 id="Il-faut-rajouter-npx-pour-initialisation">Il faut rajouter npx pour initialisation !!</h4>
 <hr>
-<h3 id="problem-报错汇总">problem 报错汇总</h3>
+<h3 id="problem-问题与报错汇总">problem 问题与报错汇总</h3>
 <p>1.tags: utiliser list [ ] pour séparer les tags<br>
 <code>tags: [blog, github pages]</code></p>
 <p>2.创建了多条目录menu，不能直接将_post中的md文件直接复制过去，否则报错。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ERROR &#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;page.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;%- partial(&#39;_partial&#x2F;article&#39;, &#123;post: page, index: false&#125;) %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;_partial&#x2F;article.ejs:61</span><br><span class="line">    59|         &lt;&#x2F;div&gt;</span><br><span class="line">    60|       &lt;% &#125; %&gt;</span><br><span class="line"> &gt;&gt; 61|       &lt;%- partial(&#39;post&#x2F;tag&#39;) %&gt;</span><br><span class="line">    62|       &lt;%- partial(&#39;post&#x2F;category&#39;) %&gt;</span><br><span class="line">    63|       &lt;% if (index &amp;&amp; theme.show_all_link)&#123; %&gt;</span><br><span class="line">    64|         &lt;p class&#x3D;&quot;article-more-link&quot;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;_partial&#x2F;post&#x2F;tag.ejs:7</span><br><span class="line">    5|                  &lt;% post.tags.forEach(function(tag, i)&#123; %&gt;</span><br><span class="line">    6|                  &lt;li class&#x3D;&quot;article-tag-list-item&quot;&gt;</span><br><span class="line"> &gt;&gt; 7|                          &lt;a href&#x3D;&quot;javascript:void(0)&quot; class&#x3D;&quot;js-tag article-tag-list-link color&lt;%&#x3D; tag.name.length % 5 + 1 %&gt;&quot;&gt;&lt;%-tag.name%</span><br><span class="line">&gt;&lt;&#x2F;a&gt;</span><br><span class="line">    8|                  &lt;&#x2F;li&gt;</span><br><span class="line">    9|                  &lt;% &#125;) %&gt;</span><br><span class="line">    10|                 &lt;&#x2F;ul&gt;</span><br><span class="line"></span><br><span class="line">Cannot read property &#39;length&#39; of undefined</span><br><span class="line">TypeError: &#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;page.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;%- partial(&#39;_partial&#x2F;article&#39;, &#123;post: page, index: false&#125;) %&gt;</span><br></pre></td></tr></table></figure>
+<p>3.按照categories分类文章：</p>
+<ul>
+<li>在scaffolds下post.md加分类categories，如：</li>
+<li>修改themes的menu如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  首页: &#x2F;</span><br><span class="line">  生活: &#x2F;categories&#x2F;life</span><br></pre></td></tr></table></figure>
+<p>3、新建一篇博客，并加分类categories为life:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">tags:</span><br><span class="line">categories: CV</span><br></pre></td></tr></table></figure>
 
       
 
@@ -347,7 +355,7 @@ Taper ces codes dans le terminal:<br>
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建"><span class="toc-number">1.</span> <span class="toc-text">创建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Il-faut-rajouter-npx-pour-initialisation"><span class="toc-number">1.1.</span> <span class="toc-text">Il faut rajouter npx pour initialisation !!</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#problem-报错汇总"><span class="toc-number">2.</span> <span class="toc-text">problem 报错汇总</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建"><span class="toc-number">1.</span> <span class="toc-text">创建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Il-faut-rajouter-npx-pour-initialisation"><span class="toc-number">1.1.</span> <span class="toc-text">Il faut rajouter npx pour initialisation !!</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#problem-问题与报错汇总"><span class="toc-number">2.</span> <span class="toc-text">problem 问题与报错汇总</span></a></li></ol>
                     </div>
                 </span>
             </div>
