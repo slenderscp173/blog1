@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>code1 modèle à multi facteurs - Ricequant | LI&#39;s finance &amp; python</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Analyse IC des facteurs (Information Coefficient)12345678910111213141516171819202122232425262728293031323334# 获取 时间段因子数据 paneldef fx_get_all_date():    &#39;&#39;&#39;    &#x3D;&#x3D;&gt; 累加单日数据，构造全">
+  <meta name="description" content="Analyse IC des facteurs (Information Coefficient) 12345678910111213141516171819202122232425262728293031323334# 获取 时间段因子数据 paneldef fx_get_all_date():    &#39;&#39;&#39;    &#x3D;&#x3D;&gt; 累加单日数据，构造全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="code1 modèle à multi facteurs - Ricequant">
 <meta property="og:url" content="http://yoursite.com/2020/04/18/facteur/index.html">
 <meta property="og:site_name" content="LI&#39;s finance &amp; python">
-<meta property="og:description" content="Analyse IC des facteurs (Information Coefficient)12345678910111213141516171819202122232425262728293031323334# 获取 时间段因子数据 paneldef fx_get_all_date():    &#39;&#39;&#39;    &#x3D;&#x3D;&gt; 累加单日数据，构造全">
+<meta property="og:description" content="Analyse IC des facteurs (Information Coefficient) 12345678910111213141516171819202122232425262728293031323334# 获取 时间段因子数据 paneldef fx_get_all_date():    &#39;&#39;&#39;    &#x3D;&#x3D;&gt; 累加单日数据，构造全">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-17T22:20:11.000Z">
 <meta property="article:modified_time" content="2020-04-18T11:32:32.259Z">
@@ -200,12 +200,9 @@
 3.获取2017-01-04 下期close
 4.计算return
 5.计算IC相关性 -->
-
-<h2 id="Analyse-IC-des-facteurs-Information-Coefficient"><a href="#Analyse-IC-des-facteurs-Information-Coefficient" class="headerlink" title="Analyse IC des facteurs (Information Coefficient)"></a>Analyse IC des facteurs (Information Coefficient)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 获取 时间段因子数据 panel</span><br><span class="line">def fx_get_all_date():</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    &#x3D;&#x3D;&gt; 累加单日数据，构造全部因子数据</span><br><span class="line">    &#x3D;&#x3D;&gt; 问题： fund 是否需要改名？担心会和回测中的fund重名!!</span><br><span class="line">    ex：基础每股盈利 basic_earnings_per_share</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import pandas as pd</span><br><span class="line"></span><br><span class="line">    #（修改！）</span><br><span class="line">    start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">    end_date &#x3D; &#39;2017-01-31&#39;</span><br><span class="line"></span><br><span class="line">    # 获取交易日期段 （关联的修改！）</span><br><span class="line">    alldate &#x3D; get_trading_dates(start_date &#x3D; start_date, end_date &#x3D; end_date)</span><br><span class="line"></span><br><span class="line">    # 1. 获取因子暴露值:基本每股收益 basic_earnings_per_share(默认全部A股)</span><br><span class="line"></span><br><span class="line">    fund&#x3D;pd.DataFrame()</span><br><span class="line">    for i in range(len(alldate)):</span><br><span class="line">        q &#x3D; query(fundamentals.income_statement.basic_earnings_per_share)</span><br><span class="line">        factor &#x3D; get_fundamentals(q,entry_date&#x3D; alldate[i]).iloc[:,0,:] #获取截面数据</span><br><span class="line">        factor[&#39;date&#39;] &#x3D; alldate[i]     #新增单日日期列，直接增加在factor里</span><br><span class="line">        fund &#x3D; pd.concat([fund,factor]) #合并所有单日数据</span><br><span class="line">        #print(fund)</span><br><span class="line"></span><br><span class="line">    return fund</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数fx_fet_all_data():</span><br><span class="line">fund &#x3D; fx_get_all_date()</span><br><span class="line">fund &#x3D; fund.set_index([&#39;date&#39;,fund.index]) #订正：要重赋值给fund，否则fund不改变！！</span><br><span class="line">print(type(fund))</span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>###</p>
+<h2 id="Analyse-IC-des-facteurs-Information-Coefficient">Analyse IC des facteurs (Information Coefficient)</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 获取 时间段因子数据 panel</span><br><span class="line">def fx_get_all_date():</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    &#x3D;&#x3D;&gt; 累加单日数据，构造全部因子数据</span><br><span class="line">    &#x3D;&#x3D;&gt; 问题： fund 是否需要改名？担心会和回测中的fund重名!!</span><br><span class="line">    ex：基础每股盈利 basic_earnings_per_share</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import pandas as pd</span><br><span class="line"></span><br><span class="line">    #（修改！）</span><br><span class="line">    start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">    end_date &#x3D; &#39;2017-01-31&#39;</span><br><span class="line"></span><br><span class="line">    # 获取交易日期段 （关联的修改！）</span><br><span class="line">    alldate &#x3D; get_trading_dates(start_date &#x3D; start_date, end_date &#x3D; end_date)</span><br><span class="line"></span><br><span class="line">    # 1. 获取因子暴露值:基本每股收益 basic_earnings_per_share(默认全部A股)</span><br><span class="line"></span><br><span class="line">    fund&#x3D;pd.DataFrame()</span><br><span class="line">    for i in range(len(alldate)):</span><br><span class="line">        q &#x3D; query(fundamentals.income_statement.basic_earnings_per_share)</span><br><span class="line">        factor &#x3D; get_fundamentals(q,entry_date&#x3D; alldate[i]).iloc[:,0,:] #获取截面数据</span><br><span class="line">        factor[&#39;date&#39;] &#x3D; alldate[i]     #新增单日日期列，直接增加在factor里</span><br><span class="line">        fund &#x3D; pd.concat([fund,factor]) #合并所有单日数据</span><br><span class="line">        #print(fund)</span><br><span class="line"></span><br><span class="line">    return fund</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数fx_fet_all_data():</span><br><span class="line">fund &#x3D; fx_get_all_date()</span><br><span class="line">fund &#x3D; fund.set_index([&#39;date&#39;,fund.index]) #订正：要重赋值给fund，否则fund不改变！！</span><br><span class="line">print(type(fund))</span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
+<h3 id=""></h3>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># 对多日时间段因子数据进行：去极值，标准化</span><br><span class="line"></span><br><span class="line">def fx_mad(factor,n&#x3D;3):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    MAD中位数绝对偏差法（median absolute deviation）:</span><br><span class="line">    输入：可以为带index的dataframe，返回dataframe。</span><br><span class="line">         不可以为Panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">         假如有多列，输入单列数据[]如: fx_mad(fund[&quot;pe_ratio&quot;])</span><br><span class="line"></span><br><span class="line">    MAD_e&#x3D;1.4826*MAD</span><br><span class="line">    再确定参数（n），一般为3,默认为3.</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import numpy as np</span><br><span class="line"></span><br><span class="line">    #1.找到数据组的中位数</span><br><span class="line">    median &#x3D; np.median(factor)</span><br><span class="line">    mad &#x3D; np.median(abs(factor-median))# 2.求出因子与中位数的绝对差，并求出绝对差的中位数MAD</span><br><span class="line"></span><br><span class="line">    # 求出3倍中位绝对数的上下限</span><br><span class="line">    up &#x3D; median + (n*1.4826*median)</span><br><span class="line">    down &#x3D; median - (n*1.4826*median)</span><br><span class="line"></span><br><span class="line">    # 用up&#x2F;down去极值</span><br><span class="line">    factor &#x3D; np.where(factor &gt; up,up,factor)</span><br><span class="line">    factor &#x3D; np.where(factor &lt; down,down,factor)</span><br><span class="line"></span><br><span class="line">    return factor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fx_stand(factor):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    标准化</span><br><span class="line">    输入:  factor可以是带index的dataframe，返回也是dataframe。</span><br><span class="line">          不可以为panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">          假如有多列，输入单列数据[]如: fx_stand(fund[&quot;pe_ratio&quot;])</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    mean&#x3D; factor.mean()</span><br><span class="line">    std &#x3D; factor.std()</span><br><span class="line">    return (factor - mean)&#x2F;std</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数 去极值 标准化：</span><br><span class="line">fund[&#39;ratio_mad&#39;]&#x3D; fx_mad(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line">fund[&#39;ratio_stand&#39;] &#x3D; fx_stand(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line"></span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
 
       
@@ -349,7 +346,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Analyse-IC-des-facteurs-Information-Coefficient"><span class="toc-number">1.</span> <span class="toc-text">Analyse IC des facteurs (Information Coefficient)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Analyse-IC-des-facteurs-Information-Coefficient"><span class="toc-number">1.</span> <span class="toc-text">Analyse IC des facteurs (Information Coefficient)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text"></span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -461,43 +458,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">alphalens</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">locked</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网站汇总</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">quant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -514,6 +475,42 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">5GMedical</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">quant</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">alphalens</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网站汇总</a>
               </li>
             
             <div class="clearfix"></div>

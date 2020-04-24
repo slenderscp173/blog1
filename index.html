@@ -457,12 +457,9 @@ currency (dtype str) - ISO code representing the default currency of all price f
 3.获取2017-01-04 下期close
 4.计算return
 5.计算IC相关性 -->
-
-<h2 id="Analyse-IC-des-facteurs-Information-Coefficient"><a href="#Analyse-IC-des-facteurs-Information-Coefficient" class="headerlink" title="Analyse IC des facteurs (Information Coefficient)"></a>Analyse IC des facteurs (Information Coefficient)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 获取 时间段因子数据 panel</span><br><span class="line">def fx_get_all_date():</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    &#x3D;&#x3D;&gt; 累加单日数据，构造全部因子数据</span><br><span class="line">    &#x3D;&#x3D;&gt; 问题： fund 是否需要改名？担心会和回测中的fund重名!!</span><br><span class="line">    ex：基础每股盈利 basic_earnings_per_share</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import pandas as pd</span><br><span class="line"></span><br><span class="line">    #（修改！）</span><br><span class="line">    start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">    end_date &#x3D; &#39;2017-01-31&#39;</span><br><span class="line"></span><br><span class="line">    # 获取交易日期段 （关联的修改！）</span><br><span class="line">    alldate &#x3D; get_trading_dates(start_date &#x3D; start_date, end_date &#x3D; end_date)</span><br><span class="line"></span><br><span class="line">    # 1. 获取因子暴露值:基本每股收益 basic_earnings_per_share(默认全部A股)</span><br><span class="line"></span><br><span class="line">    fund&#x3D;pd.DataFrame()</span><br><span class="line">    for i in range(len(alldate)):</span><br><span class="line">        q &#x3D; query(fundamentals.income_statement.basic_earnings_per_share)</span><br><span class="line">        factor &#x3D; get_fundamentals(q,entry_date&#x3D; alldate[i]).iloc[:,0,:] #获取截面数据</span><br><span class="line">        factor[&#39;date&#39;] &#x3D; alldate[i]     #新增单日日期列，直接增加在factor里</span><br><span class="line">        fund &#x3D; pd.concat([fund,factor]) #合并所有单日数据</span><br><span class="line">        #print(fund)</span><br><span class="line"></span><br><span class="line">    return fund</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数fx_fet_all_data():</span><br><span class="line">fund &#x3D; fx_get_all_date()</span><br><span class="line">fund &#x3D; fund.set_index([&#39;date&#39;,fund.index]) #订正：要重赋值给fund，否则fund不改变！！</span><br><span class="line">print(type(fund))</span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>###</p>
+<h2 id="Analyse-IC-des-facteurs-Information-Coefficient">Analyse IC des facteurs (Information Coefficient)</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 获取 时间段因子数据 panel</span><br><span class="line">def fx_get_all_date():</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    &#x3D;&#x3D;&gt; 累加单日数据，构造全部因子数据</span><br><span class="line">    &#x3D;&#x3D;&gt; 问题： fund 是否需要改名？担心会和回测中的fund重名!!</span><br><span class="line">    ex：基础每股盈利 basic_earnings_per_share</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import pandas as pd</span><br><span class="line"></span><br><span class="line">    #（修改！）</span><br><span class="line">    start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">    end_date &#x3D; &#39;2017-01-31&#39;</span><br><span class="line"></span><br><span class="line">    # 获取交易日期段 （关联的修改！）</span><br><span class="line">    alldate &#x3D; get_trading_dates(start_date &#x3D; start_date, end_date &#x3D; end_date)</span><br><span class="line"></span><br><span class="line">    # 1. 获取因子暴露值:基本每股收益 basic_earnings_per_share(默认全部A股)</span><br><span class="line"></span><br><span class="line">    fund&#x3D;pd.DataFrame()</span><br><span class="line">    for i in range(len(alldate)):</span><br><span class="line">        q &#x3D; query(fundamentals.income_statement.basic_earnings_per_share)</span><br><span class="line">        factor &#x3D; get_fundamentals(q,entry_date&#x3D; alldate[i]).iloc[:,0,:] #获取截面数据</span><br><span class="line">        factor[&#39;date&#39;] &#x3D; alldate[i]     #新增单日日期列，直接增加在factor里</span><br><span class="line">        fund &#x3D; pd.concat([fund,factor]) #合并所有单日数据</span><br><span class="line">        #print(fund)</span><br><span class="line"></span><br><span class="line">    return fund</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数fx_fet_all_data():</span><br><span class="line">fund &#x3D; fx_get_all_date()</span><br><span class="line">fund &#x3D; fund.set_index([&#39;date&#39;,fund.index]) #订正：要重赋值给fund，否则fund不改变！！</span><br><span class="line">print(type(fund))</span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
+<h3 id=""></h3>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># 对多日时间段因子数据进行：去极值，标准化</span><br><span class="line"></span><br><span class="line">def fx_mad(factor,n&#x3D;3):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    MAD中位数绝对偏差法（median absolute deviation）:</span><br><span class="line">    输入：可以为带index的dataframe，返回dataframe。</span><br><span class="line">         不可以为Panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">         假如有多列，输入单列数据[]如: fx_mad(fund[&quot;pe_ratio&quot;])</span><br><span class="line"></span><br><span class="line">    MAD_e&#x3D;1.4826*MAD</span><br><span class="line">    再确定参数（n），一般为3,默认为3.</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import numpy as np</span><br><span class="line"></span><br><span class="line">    #1.找到数据组的中位数</span><br><span class="line">    median &#x3D; np.median(factor)</span><br><span class="line">    mad &#x3D; np.median(abs(factor-median))# 2.求出因子与中位数的绝对差，并求出绝对差的中位数MAD</span><br><span class="line"></span><br><span class="line">    # 求出3倍中位绝对数的上下限</span><br><span class="line">    up &#x3D; median + (n*1.4826*median)</span><br><span class="line">    down &#x3D; median - (n*1.4826*median)</span><br><span class="line"></span><br><span class="line">    # 用up&#x2F;down去极值</span><br><span class="line">    factor &#x3D; np.where(factor &gt; up,up,factor)</span><br><span class="line">    factor &#x3D; np.where(factor &lt; down,down,factor)</span><br><span class="line"></span><br><span class="line">    return factor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fx_stand(factor):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    标准化</span><br><span class="line">    输入:  factor可以是带index的dataframe，返回也是dataframe。</span><br><span class="line">          不可以为panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">          假如有多列，输入单列数据[]如: fx_stand(fund[&quot;pe_ratio&quot;])</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    mean&#x3D; factor.mean()</span><br><span class="line">    std &#x3D; factor.std()</span><br><span class="line">    return (factor - mean)&#x2F;std</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数 去极值 标准化：</span><br><span class="line">fund[&#39;ratio_mad&#39;]&#x3D; fx_mad(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line">fund[&#39;ratio_stand&#39;] &#x3D; fx_stand(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line"></span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
 
       
@@ -628,15 +625,17 @@ currency (dtype str) - ISO code representing the default currency of all price f
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="python递归"><a href="#python递归" class="headerlink" title="python递归"></a>python递归</h2><p>普通递归:</p>
+        <h2 id="python递归">python递归</h2>
+<p>普通递归:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def func(n):</span><br><span class="line">    if n &#x3D;&#x3D; 0:</span><br><span class="line">        return 1</span><br><span class="line">    return func(n - 1) * n</span><br></pre></td></tr></table></figure>
 <p>尾递归:如果一个函数中所有递归形式的调用都出现在函数的末尾，我们称这个递归函数是尾递归的。 当递归调用是整个函数体中最后执行的语句且它的返回值不属于表达式的一部分时，这个递归调用就是尾递归。尾递归函数的特点是在回归过程中不用做任何操作，这个特性很重要，因为大多数现代的编译器会利用这种特点自动生成优化的代码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def func(n, res&#x3D;1):</span><br><span class="line">    if n &#x3D;&#x3D; 0:</span><br><span class="line">        return res</span><br><span class="line">    return func(n - 1, n * res)</span><br></pre></td></tr></table></figure>
-<p>但是python的编译器不支持深度的尾递归，仍会报错。<br>解决办法二：写一个装饰器捕获异常</p>
+<p>但是python的编译器不支持深度的尾递归，仍会报错。<br>
+解决办法二：写一个装饰器捕获异常</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import sys  </span><br><span class="line"></span><br><span class="line">class TailRecurseException(BaseException):  </span><br><span class="line">   def __init__(self, args, kwargs):  </span><br><span class="line">     self.args &#x3D; args  </span><br><span class="line">     self.kwargs &#x3D; kwargs  </span><br><span class="line"></span><br><span class="line">def tail_call_optimized(g):   </span><br><span class="line">   def func(*args, **kwargs):  </span><br><span class="line">     f &#x3D; sys._getframe()  </span><br><span class="line">     if f.f_back and f.f_back.f_back and f.f_back.f_back.f_code &#x3D;&#x3D; f.f_code:  </span><br><span class="line">       raise TailRecurseException(args, kwargs)  </span><br><span class="line">     else:  </span><br><span class="line">       while 1:  </span><br><span class="line">         try:  </span><br><span class="line">           return g(*args, **kwargs)  </span><br><span class="line">         except TailRecurseException as e:  </span><br><span class="line">           args &#x3D; e.args  </span><br><span class="line">           kwargs &#x3D; e.kwargs  </span><br><span class="line">   func.__doc__ &#x3D; g.__doc__  </span><br><span class="line">   return func  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@tail_call_optimized</span><br><span class="line">def fact(n, tot &#x3D; 1):</span><br><span class="line">    if n &#x3D;&#x3D;1:</span><br><span class="line">        print(&quot;fact(1) &#x3D;&#x3D;&gt; 1&quot;)</span><br><span class="line">        return tot</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;fact(&quot;+str(n)+&quot;)&quot;, &quot;&#x3D;&#x3D;&gt;&quot;, str(n)+&quot; * fact(&quot;+str(n-1)+&quot;)&quot;)</span><br><span class="line">        return fact(n-1, n*tot)</span><br></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><p>1.面向过程</p>
+<h2 id="面向对象">面向对象</h2>
+<p>1.面向过程</p>
 <ul>
 <li>将独立的功能代码封装成不同的函数</li>
 <li>顺序的调用不同函数</li>
@@ -648,7 +647,8 @@ currency (dtype str) - ISO code representing the default currency of all price f
 <li>根据职责确定<code>不同的对象</code>，在对象内部封装不同的方法（多个）</li>
 <li>最后：顺序但独立地让不同的对象调用不同的方法</li>
 </ul>
-<h3 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h3><p>类：（飞机模板)</p>
+<h3 id="类与对象">类与对象</h3>
+<p>类：（飞机模板)</p>
 <ul>
 <li>特征=属性</li>
 <li>行为=方法</li>
@@ -658,20 +658,32 @@ currency (dtype str) - ISO code representing the default currency of all price f
 <ul>
 <li>根据类图纸创建出来的</li>
 </ul>
-<p><code>类只有一个</code>，对象可以由很多个。不同对象之间的属性可能会各不相同（如：飞机的颜色不同）。<br>类中有什么属性和方法，对象就有什么样的属性与方法。当对象创建出来后，可以申明其调用的不同的属性。</p>
-<h3 id="dir-内置函数"><a href="#dir-内置函数" class="headerlink" title="dir()内置函数"></a>dir()内置函数</h3><p>dir（函数名）：返回[内置方法和属性].<br>利用dir()函数，不需要死记硬背。</p>
-<h3 id="定义简单的类（只包含方法）"><a href="#定义简单的类（只包含方法）" class="headerlink" title="定义简单的类（只包含方法）"></a>定义简单的类（只包含方法）</h3><p>类的创建：<br>1.<code>类名</code>:首字母大写，单词间没有下划线<br>2.<code>属性</code>:这类事物具有什么样的特征<br>3.<code>方法</code>:这类事物具有什么样的行为</p>
+<p><code>类只有一个</code>，对象可以由很多个。不同对象之间的属性可能会各不相同（如：飞机的颜色不同）。<br>
+类中有什么属性和方法，对象就有什么样的属性与方法。当对象创建出来后，可以申明其调用的不同的属性。</p>
+<h3 id="dir-内置函数">dir()内置函数</h3>
+<p>dir（函数名）：返回[内置方法和属性].<br>
+利用dir()函数，不需要死记硬背。</p>
+<h3 id="定义简单的类（只包含方法）">定义简单的类（只包含方法）</h3>
+<p>类的创建：<br>
+1.<code>类名</code>:首字母大写，单词间没有下划线<br>
+2.<code>属性</code>:这类事物具有什么样的特征<br>
+3.<code>方法</code>:这类事物具有什么样的行为</p>
 <p>简单类的定义：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class 类名大写:</span><br><span class="line">    def 方法(self,参数列表):</span><br><span class="line">        方法的定义格式与函数几乎一样，除了self参数。</span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
 <p>如何创建对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象变量 &#x3D; 类名()</span><br></pre></td></tr></table></figure>
-<hr>
+<h2 id="￼4"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象变量 &#x3D; 类名()</span><br></pre></td></tr></table></figure></h2>
 <p>第一个面向对象的程序Cat():</p>
 <ul>
-<li>小猫爱<code>吃鱼</code>，小猫要<code>喝水</code>。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Cat():</span><br><span class="line"></span><br><span class="line">    def eat(self):</span><br><span class="line">        print(&#39;小猫爱吃鱼&#39;)</span><br><span class="line"></span><br><span class="line">    def drink(self):</span><br><span class="line">        print(&#39;小猫要喝水&#39;)</span><br></pre></td></tr></table></figure>
-创建对象tom：<br>tom = Cat()<br>tom.eat()<br>tom.drink()</li>
+<li>小猫爱<code>吃鱼</code>，小猫要<code>喝水</code>。</li>
 </ul>
-<p>addr  = id(tom)<br>print(‘%d’%addr):十进制<br>print(‘%x’%addr):十六进制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Cat():</span><br><span class="line"></span><br><span class="line">    def eat(self):</span><br><span class="line">        print(&#39;小猫爱吃鱼&#39;)</span><br><span class="line"></span><br><span class="line">    def drink(self):</span><br><span class="line">        print(&#39;小猫要喝水&#39;)</span><br></pre></td></tr></table></figure>
+<p>创建对象tom：<br>
+tom = Cat()<br>
+tom.eat()<br>
+tom.drink()</p>
+<p>addr  = id(tom)<br>
+print(’%d’%addr):十进制<br>
+print(’%x’%addr):十六进制</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">再创建一个对象lazy_cat：</span><br><span class="line">lazy_cat &#x3D; cat()</span><br></pre></td></tr></table></figure>
 
       
@@ -686,15 +698,15 @@ currency (dtype str) - ISO code representing the default currency of all price f
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
         		</li>
       		
 		</ul>
@@ -910,11 +922,25 @@ currency (dtype str) - ISO code representing the default currency of all price f
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="量化投资的常见基本策略"><a href="#量化投资的常见基本策略" class="headerlink" title="量化投资的常见基本策略"></a>量化投资的常见基本策略</h3><p>1.动量投资<br>2.均值回归<br>3.投资者情绪策略<br>4.市场中性投资</p>
-<h3 id="Quantopian提供的数据"><a href="#Quantopian提供的数据" class="headerlink" title="Quantopian提供的数据"></a>Quantopian提供的数据</h3><p>美国股票和ETF<br>期货数据<br>stockTwits交易员情绪数据统计<br>公司收益公布数据<br>机器学习预测股票收益数据<br>新闻分析情绪数据<br>并购收购数据<br>美国通胀率数据<br>57+机构质量数据</p>
-<h3 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h3><p>研究平台：Research is a Jupyter Notebook environment that allows us to run Python.<br>&lt;示例&gt;</p>
+        <h3 id="量化投资的常见基本策略">量化投资的常见基本策略</h3>
+<p>1.动量投资<br>
+2.均值回归<br>
+3.投资者情绪策略<br>
+4.市场中性投资</p>
+<h3 id="Quantopian提供的数据">Quantopian提供的数据</h3>
+<p>美国股票和ETF<br>
+期货数据<br>
+stockTwits交易员情绪数据统计<br>
+公司收益公布数据<br>
+机器学习预测股票收益数据<br>
+新闻分析情绪数据<br>
+并购收购数据<br>
+美国通胀率数据<br>
+57+机构质量数据</p>
+<h3 id="平台">平台</h3>
+<p>研究平台：Research is a Jupyter Notebook environment that allows us to run Python.<br>
+&lt;示例&gt;</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># Research environment functions</span><br><span class="line">from quantopian.research import prices, symbols</span><br><span class="line"></span><br><span class="line"># Pandas library: https:&#x2F;&#x2F;pandas.pydata.org&#x2F;</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># Query historical pricing data for AAPL</span><br><span class="line">aapl_close &#x3D; prices(</span><br><span class="line">    assets&#x3D;symbols(&#39;AAPL&#39;),</span><br><span class="line">    start&#x3D;&#39;2013-01-01&#39;,</span><br><span class="line">    end&#x3D;&#39;2016-01-01&#39;,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Compute 20 and 50 day moving averages on</span><br><span class="line"># AAPL&#39;s pricing data</span><br><span class="line">aapl_sma20 &#x3D; aapl_close.rolling(20).mean()</span><br><span class="line">aapl_sma50 &#x3D; aapl_close.rolling(50).mean()</span><br><span class="line"></span><br><span class="line"># Combine results into a pandas DataFrame and plot</span><br><span class="line">pd.DataFrame(&#123;   </span><br><span class="line">    &#39;AAPL&#39;: aapl_close,</span><br><span class="line">    &#39;SMA20&#39;: aapl_sma20,</span><br><span class="line">    &#39;SMA50&#39;: aapl_sma50</span><br><span class="line">&#125;).plot(</span><br><span class="line">    title&#x3D;&#39;AAPL Close Price &#x2F; SMA Crossover&#39;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
 <p>回测：</p>
 
       
@@ -1390,43 +1416,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">alphalens</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Markdown</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">locked</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网站汇总</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">quant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">study</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1443,6 +1433,42 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">5GMedical</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">quant</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Markdown</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">alphalens</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">github pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网站汇总</a>
               </li>
             
             <div class="clearfix"></div>
