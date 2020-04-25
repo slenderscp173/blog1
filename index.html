@@ -258,19 +258,19 @@
 
 
   
-    <article id="post-quantopian" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-guide_quantopian" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/quantopian/">【guide】quantopian</a>
+      <a class="article-title" href="/2020/04/20/guide_quantopian/">【guide】quantopian</a>
     </h1>
   
 
         
-        <a href="/2020/04/20/quantopian/" class="archive-article-date">
+        <a href="/2020/04/20/guide_quantopian/" class="archive-article-date">
   	<time datetime="2020-04-19T23:16:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
 </a>
         
@@ -391,100 +391,21 @@ currency (dtype str) - ISO code representing the default currency of all price f
 	</div>
 
       
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/quantopian/">voir tout - 全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-facteur" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/18/facteur/">code1 modèle à multi facteurs - Ricequant</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/18/facteur/" class="archive-article-date">
-  	<time datetime="2020-04-17T22:20:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- 因子的IC分析（信息系数 Information Coefficient,简称 IC）
-目标：
-- 因子暴露值和下期收益率的相关性
-- 因子IC系数的大小意义
-- 知道股票收益率的计算规则
-- 利用 Alphalens计算IC系数
--  因子IC的效果图分析
-步骤：
-1.获取因子<基本每股收益>的暴露值
-2.获取2017-01-03 当期close
-3.获取2017-01-04 下期close
-4.计算return
-5.计算IC相关性 -->
-<h2 id="Analyse-IC-des-facteurs-Information-Coefficient">Analyse IC des facteurs (Information Coefficient)</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 获取 时间段因子数据 panel</span><br><span class="line">def fx_get_all_date():</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    &#x3D;&#x3D;&gt; 累加单日数据，构造全部因子数据</span><br><span class="line">    &#x3D;&#x3D;&gt; 问题： fund 是否需要改名？担心会和回测中的fund重名!!</span><br><span class="line">    ex：基础每股盈利 basic_earnings_per_share</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import pandas as pd</span><br><span class="line"></span><br><span class="line">    #（修改！）</span><br><span class="line">    start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">    end_date &#x3D; &#39;2017-01-31&#39;</span><br><span class="line"></span><br><span class="line">    # 获取交易日期段 （关联的修改！）</span><br><span class="line">    alldate &#x3D; get_trading_dates(start_date &#x3D; start_date, end_date &#x3D; end_date)</span><br><span class="line"></span><br><span class="line">    # 1. 获取因子暴露值:基本每股收益 basic_earnings_per_share(默认全部A股)</span><br><span class="line"></span><br><span class="line">    fund&#x3D;pd.DataFrame()</span><br><span class="line">    for i in range(len(alldate)):</span><br><span class="line">        q &#x3D; query(fundamentals.income_statement.basic_earnings_per_share)</span><br><span class="line">        factor &#x3D; get_fundamentals(q,entry_date&#x3D; alldate[i]).iloc[:,0,:] #获取截面数据</span><br><span class="line">        factor[&#39;date&#39;] &#x3D; alldate[i]     #新增单日日期列，直接增加在factor里</span><br><span class="line">        fund &#x3D; pd.concat([fund,factor]) #合并所有单日数据</span><br><span class="line">        #print(fund)</span><br><span class="line"></span><br><span class="line">    return fund</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数fx_fet_all_data():</span><br><span class="line">fund &#x3D; fx_get_all_date()</span><br><span class="line">fund &#x3D; fund.set_index([&#39;date&#39;,fund.index]) #订正：要重赋值给fund，否则fund不改变！！</span><br><span class="line">print(type(fund))</span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
-<h3 id=""></h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># 对多日时间段因子数据进行：去极值，标准化</span><br><span class="line"></span><br><span class="line">def fx_mad(factor,n&#x3D;3):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    MAD中位数绝对偏差法（median absolute deviation）:</span><br><span class="line">    输入：可以为带index的dataframe，返回dataframe。</span><br><span class="line">         不可以为Panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">         假如有多列，输入单列数据[]如: fx_mad(fund[&quot;pe_ratio&quot;])</span><br><span class="line"></span><br><span class="line">    MAD_e&#x3D;1.4826*MAD</span><br><span class="line">    再确定参数（n），一般为3,默认为3.</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import numpy as np</span><br><span class="line"></span><br><span class="line">    #1.找到数据组的中位数</span><br><span class="line">    median &#x3D; np.median(factor)</span><br><span class="line">    mad &#x3D; np.median(abs(factor-median))# 2.求出因子与中位数的绝对差，并求出绝对差的中位数MAD</span><br><span class="line"></span><br><span class="line">    # 求出3倍中位绝对数的上下限</span><br><span class="line">    up &#x3D; median + (n*1.4826*median)</span><br><span class="line">    down &#x3D; median - (n*1.4826*median)</span><br><span class="line"></span><br><span class="line">    # 用up&#x2F;down去极值</span><br><span class="line">    factor &#x3D; np.where(factor &gt; up,up,factor)</span><br><span class="line">    factor &#x3D; np.where(factor &lt; down,down,factor)</span><br><span class="line"></span><br><span class="line">    return factor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fx_stand(factor):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    标准化</span><br><span class="line">    输入:  factor可以是带index的dataframe，返回也是dataframe。</span><br><span class="line">          不可以为panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">          假如有多列，输入单列数据[]如: fx_stand(fund[&quot;pe_ratio&quot;])</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    mean&#x3D; factor.mean()</span><br><span class="line">    std &#x3D; factor.std()</span><br><span class="line">    return (factor - mean)&#x2F;std</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用函数 去极值 标准化：</span><br><span class="line">fund[&#39;ratio_mad&#39;]&#x3D; fx_mad(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line">fund[&#39;ratio_stand&#39;] &#x3D; fx_stand(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line"></span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">quant</a>
+        			<a href="/categories/quant//" class="article-tag-list-link color1">quant</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/18/facteur/">voir tout - 全文 >></a>
+          <a class="article-more-a" href="/2020/04/20/guide_quantopian/">voir tout - 全文 >></a>
         </p>
       
 
@@ -906,19 +827,19 @@ print(’%x’%addr):十六进制</p>
 
 
   
-    <article id="post-alphalens" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-guide_alphalens" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/16/alphalens/">【guide】alphalens</a>
+      <a class="article-title" href="/2020/04/16/guide_alphalens/">【guide】alphalens</a>
     </h1>
   
 
         
-        <a href="/2020/04/16/alphalens/" class="archive-article-date">
+        <a href="/2020/04/16/guide_alphalens/" class="archive-article-date">
   	<time datetime="2020-04-16T11:44:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
 </a>
         
@@ -966,10 +887,21 @@ stockTwits交易员情绪数据统计<br>
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/quant//" class="article-tag-list-link color1">quant</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/16/alphalens/">voir tout - 全文 >></a>
+          <a class="article-more-a" href="/2020/04/16/guide_alphalens/">voir tout - 全文 >></a>
         </p>
       
 
@@ -1034,9 +966,10 @@ Taper ces codes dans le terminal:<br>
 <h4 id="Il-faut-rajouter-npx-pour-initialisation">Il faut rajouter npx pour initialisation !!</h4>
 <hr>
 <h3 id="problem-问题与报错汇总">problem 问题与报错汇总</h3>
-<h2 id="1-tags-utiliser-list-pour-separer-les-tagstags-blog-github-pages">1.tags: utiliser list [ ] pour séparer les tags<br>
-<code>tags: [blog, github pages]</code></h2>
-<p>2.创建了多条目录menu，不能直接将_post中的md文件直接复制过去，否则报错。</p>
+<p>1.tags标签: utiliser list [ ] pour séparer les tags<br>
+<code>tags: [blog, github pages]</code></p>
+<hr>
+<p>2.创建了多条目录menu，不能直接将_post中的md文件直接复制过去，否则报错。如下：</p>
 <h2 id="￼0"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ERROR &#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;page.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;%- partial(&#39;_partial&#x2F;article&#39;, &#123;post: page, index: false&#125;) %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;_partial&#x2F;article.ejs:61</span><br><span class="line">    59|         &lt;&#x2F;div&gt;</span><br><span class="line">    60|       &lt;% &#125; %&gt;</span><br><span class="line"> &gt;&gt; 61|       &lt;%- partial(&#39;post&#x2F;tag&#39;) %&gt;</span><br><span class="line">    62|       &lt;%- partial(&#39;post&#x2F;category&#39;) %&gt;</span><br><span class="line">    63|       &lt;% if (index &amp;&amp; theme.show_all_link)&#123; %&gt;</span><br><span class="line">    64|         &lt;p class&#x3D;&quot;article-more-link&quot;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;_partial&#x2F;post&#x2F;tag.ejs:7</span><br><span class="line">    5|                  &lt;% post.tags.forEach(function(tag, i)&#123; %&gt;</span><br><span class="line">    6|                  &lt;li class&#x3D;&quot;article-tag-list-item&quot;&gt;</span><br><span class="line"> &gt;&gt; 7|                          &lt;a href&#x3D;&quot;javascript:void(0)&quot; class&#x3D;&quot;js-tag article-tag-list-link color&lt;%&#x3D; tag.name.length % 5 + 1 %&gt;&quot;&gt;&lt;%-tag.name%</span><br><span class="line">&gt;&lt;&#x2F;a&gt;</span><br><span class="line">    8|                  &lt;&#x2F;li&gt;</span><br><span class="line">    9|                  &lt;% &#125;) %&gt;</span><br><span class="line">    10|                 &lt;&#x2F;ul&gt;</span><br><span class="line"></span><br><span class="line">Cannot read property &#39;length&#39; of undefined</span><br><span class="line">TypeError: &#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;page.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;%- partial(&#39;_partial&#x2F;article&#39;, &#123;post: page, index: false&#125;) %&gt;</span><br></pre></td></tr></table></figure></h2>
 <p>3.翻页报错(未解决)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Next &amp;raquo;</span><br></pre></td></tr></table></figure>
@@ -1050,8 +983,8 @@ Taper ces codes dans le terminal:<br>
 1.降低hexo版本就行，但是降低版本会有其他一些小问题<br>
 2.在\themes\yilia\layout_partial 文件夹下面，把所有的 &amp;laquo &amp;raquo 改成 &amp;lt &amp;gt</p>
 <hr>
-<p>4.文档分类至自定义导航菜单 （categories）<br>
-解决连接: <a href="https://opsnotes.net/post/others/hexo-%E6%96%B0%E5%BB%BA%E8%8F%9C%E5%8D%95menu-%E5%AD%98%E6%94%BE%E5%BD%92%E6%A1%A3%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">lien</a></p>
+<p>4.文档分类至自定义导航菜单 （categories）</p>
+<p>解决连接: <a href="https://opsnotes.net/post/others/hexo-%E6%96%B0%E5%BB%BA%E8%8F%9C%E5%8D%95menu-%E5%AD%98%E6%94%BE%E5%BD%92%E6%A1%A3%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">lien</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 <p>创建自定义导航菜单：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">    home: &#x2F;home&#x2F;</span><br><span class="line">    quant: &#x2F;categories&#x2F;quant&#x2F;</span><br></pre></td></tr></table></figure>
@@ -1335,10 +1268,82 @@ Markdown材料出处标记<br>
 
 
   
+    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &gt;</a>
-    </nav>
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/16/hello-world/">Hello World</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/16/hello-world/" class="archive-article-date">
+  	<time datetime="2020-04-15T22:55:53.434Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start">Quick Start</h2>
+<h3 id="Create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/16/hello-world/">voir tout - 全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
 
 

@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>LI&#39;s finance &amp; python</title>
+  <title>【guide】quantopian | LI&#39;s finance &amp; python</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LI&#39;s finance &amp; python">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="quantopian简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【guide】quantopian">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/guide_quantopian/index.html">
 <meta property="og:site_name" content="LI&#39;s finance &amp; python">
+<meta property="og:description" content="quantopian简介">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-19T23:16:10.000Z">
+<meta property="article:modified_time" content="2020-04-25T13:02:00.487Z">
 <meta property="article:author" content="slenderscp173">
-<meta property="article:tag" content="Finance">
-<meta property="article:tag" content="Python">
+<meta property="article:tag" content="quant">
+<meta property="article:tag" content="study">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="LI&#39;s finance &amp; python" type="application/atom+xml">
@@ -164,63 +168,251 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-guide_quantopian" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/16/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      【guide】quantopian
     </h1>
   
 
         
-        <a href="/2020/04/16/hello-world/" class="archive-article-date">
-  	<time datetime="2020-04-15T22:55:53.434Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
+        <a href="/2020/04/20/guide_quantopian/" class="archive-article-date">
+  	<time datetime="2020-04-19T23:16:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="overview">overview</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Country</th>
+<th style="text-align:center">Country Code</th>
+<th style="text-align:center">Pipeline Domain</th>
+<th style="text-align:center">Supported Exchanges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">China</td>
+<td style="text-align:center">CN</td>
+<td style="text-align:center">CN_EQUITIES</td>
+<td style="text-align:center">Shenzhen Stock Exchange, Shanghai Stock Exchange</td>
+</tr>
+<tr>
+<td style="text-align:center">United States</td>
+<td style="text-align:center">US</td>
+<td style="text-align:center">US_EQUITIES</td>
+<td style="text-align:center">NYSE, NASDAQ, AMEX</td>
+</tr>
+<tr>
+<td style="text-align:center">France</td>
+<td style="text-align:center">FR</td>
+<td style="text-align:center">FR_EQUITIES</td>
+<td style="text-align:center">Euronext Paris</td>
+</tr>
+<tr>
+<td style="text-align:center">Germany</td>
+<td style="text-align:center">DE</td>
+<td style="text-align:center">DE_EQUITIES</td>
+<td style="text-align:center">Frankfurt Stock Exchange…</td>
+</tr>
+<tr>
+<td style="text-align:center">Japan</td>
+<td style="text-align:center">JP</td>
+<td style="text-align:center">JP_EQUITIES</td>
+<td style="text-align:center">Tokyo Stock Exchange</td>
+</tr>
+<tr>
+<td style="text-align:center">Great Britain</td>
+<td style="text-align:center">GB</td>
+<td style="text-align:center">GB_EQUITIES</td>
+<td style="text-align:center">London Stock Exchange, ICAP Securities &amp; Derivatives Exchange, Cboe Europe Equities CXE</td>
+</tr>
+<tr>
+<td style="text-align:center">Hong Kong</td>
+<td style="text-align:center">HK</td>
+<td style="text-align:center">HK_EQUITIES</td>
+<td style="text-align:center">Hong Kong Stock Exchange</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Daily-pricing-volume">Daily pricing &amp; volume</h2>
+<p>Coverage: All supported countries on Quantopian. Note: non-US equities are not yet supported in the IDE.<br>
+Data Frequency: Daily<br>
+Update Frequency: Daily (updated overnight after each trading day).<br>
+Timespan: 2004-01-01 to present.<br>
+Holdout (US only): None<br>
+Holdout (non-US): 1 year</p>
+<p>Adjustement:<br>
+Prices are adjusted for events like splits, dividends, and spinoffs to correct for ‘jumps’ in prices that don’t actually reflect changes in the equity’s value. To avoid lookahead bias, Quantopian prices are adjusted point-in-time.</p>
+<blockquote>
+<p>Daily pricing data is accessible via the EquityPricing pipeline DataSet.<br>
+from quantopian.pipeline.data import EquityPricing</p>
+</blockquote>
+<h3 id="Exemple">Exemple:</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from quantopian.pipeline import Pipeline</span><br><span class="line">from quantopian.pipeline.data import EquityPricing #导入!</span><br><span class="line">from quantopian.pipeline.domain import US_EQUITIES #导入目标国家US数据</span><br><span class="line">from quantopian.research import run_pipeline</span><br></pre></td></tr></table></figure>
+<p>Get the latest daily close price for all equities.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yesterday_close &#x3D; EquityPricing.close.latest</span><br></pre></td></tr></table></figure>
+<p>Get the latest daily trading &lt; volume &gt; for all equities.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yesterday_volume &#x3D; EquityPricing.volume.latest</span><br></pre></td></tr></table></figure>
+<p>Add our data columns to our pipeline and specifies the domain<br>
+to be US_EQUITIES.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pipe &#x3D; Pipeline(</span><br><span class="line">    columns&#x3D;&#123;</span><br><span class="line">        &#39;close&#39;: yesterday_close,</span><br><span class="line">        &#39;volume&#39;: yesterday_volume,</span><br><span class="line">    &#125;,</span><br><span class="line">    domain&#x3D;US_EQUITIES,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Run the pipeline over a one year period and print the output.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df &#x3D; run_pipeline(pipe, &#39;2015-05-05&#39;, &#39;2016-05-05&#39;)</span><br><span class="line">print(df.head())</span><br></pre></td></tr></table></figure>
+<h3 id="Fields">Fields</h3>
+<p>The EquityPricing dataset has 5 fields (accessible as BoundColumn attributes): close, open, high, low, volume.</p>
+<ul>
+<li>close (dtype float64) - Price at market close.</li>
+<li>open (dtype float64) - Price at market open. Note that an EquityPricing.open.latest pipeline factor executed on day N gets the open price from day N-1. This is true for virtually all pipeline datasets but can sometimes be unexpected for open price.</li>
+<li>high (dtype float64) - Highest price reached by the equity throughout the day.</li>
+<li>low (dtype float64) - Lowest price reached by the equity throughout the day.</li>
+<li>volume (dtype float64) - Number of shares traded.<br>
+currency (dtype str) - ISO code representing the default currency of all price fields on this dataset.</li>
+</ul>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Merci！谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">quant</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">study</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/quant//" class="article-tag-list-link color1">quant</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/16/hello-world/">voir tout - 全文 >></a>
-        </p>
-      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
 
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/20/guide_quantopian/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/04/23/PTA-deskresearch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          PTA_Deskresearch_5Gmedical
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/17/multifactor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【 learn modèle multi-facteurs 】- Ricequant</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -235,19 +427,33 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#overview"><span class="toc-number">1.</span> <span class="toc-text">overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Daily-pricing-volume"><span class="toc-number">2.</span> <span class="toc-text">Daily pricing &amp; volume</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Exemple"><span class="toc-number">2.1.</span> <span class="toc-text">Exemple:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fields"><span class="toc-number">2.2.</span> <span class="toc-text">Fields</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
 
 
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
+  
+
+  
+
+  
 
 
           </div>
@@ -269,8 +475,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
