@@ -8,10 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>LI&#39;s finance &amp; python</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="不努力的话，上天会把你的天赋收回去的。所以沉下心来，去做你能做到的。">
+<meta property="og:type" content="website">
 <meta property="og:title" content="LI&#39;s finance &amp; python">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="LI&#39;s finance &amp; python">
+<meta property="og:description" content="不努力的话，上天会把你的天赋收回去的。所以沉下心来，去做你能做到的。">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="slenderscp173">
 <meta property="article:tag" content="Finance">
@@ -51,7 +53,7 @@
 		  <h1 class="header-author"><a href="/">slenderscp173</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">我浑身的本事，还抵不过轻飘飘一张纸吗！</p>
+		<p class="header-subtitle">我浑身的本事， &lt;br&gt; 还抵不过轻飘飘一张纸吗！</p>
 		
 
 		<nav class="header-menu">
@@ -113,7 +115,7 @@
 			  <h1 class="header-author js-header-author">slenderscp173</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>我浑身的本事，还抵不过轻飘飘一张纸吗！<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>我浑身的本事， &lt;br&gt; 还抵不过轻飘飘一张纸吗！<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -647,10 +649,10 @@ currency (dtype str) - ISO code representing the default currency of all price f
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id=""></h3>
+        <h3 id="install">install</h3>
 <p>pip install alphalens</p>
-<p>###（indépendant）1er paramètre : pour alphalens&lt; multi_series&gt;（factor）<br>
-à rechercher: facteurs &amp; varaible date<br>
+<h3 id="independant-1er-parametre-pour-alphalens-multi-series-（factor）">(indépendant) 1er paramètre : pour alphalens [multi_series]（factor）</h3>
+<p>à rechercher: facteurs &amp; varaible date<br>
 def: fx_get_all_data()<br>
 éliminer les données extrêmes + standardiser：fx_mad() + fx_std()<br>
 format=&gt; multi_series</p>
@@ -757,7 +759,7 @@ format=&gt; multi_series</p>
 </tr>
 </tbody>
 </table>
-<h3 id="-2"></h3>
+<h3 id=""></h3>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># sur les données (periode)：&#x3D;&#x3D;&gt; éliminer l&#39;extrême &amp; standardiser</span><br><span class="line"></span><br><span class="line">def fx_mad(factor,n&#x3D;3):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    MAD méthode Écart Médian Absolu（median absolute deviation）:</span><br><span class="line">    输入：可以为带index的dataframe，返回dataframe。</span><br><span class="line">         不可以为Panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">         假如有多列，输入单列数据[]如: fx_mad(fund[&quot;pe_ratio&quot;])</span><br><span class="line"></span><br><span class="line">    MAD_e &#x3D; 1.4826*MAD</span><br><span class="line">    paramètre（n），normalement &#x3D; 3</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import numpy as np</span><br><span class="line"></span><br><span class="line">    #1.trouver le médian du groupe des données</span><br><span class="line">    median &#x3D; np.median(factor)</span><br><span class="line">    mad &#x3D; np.median(abs(factor-median))# 2.求出因子与中位数的绝对差，并求出绝对差的中位数MAD</span><br><span class="line"></span><br><span class="line">    # limite up &amp; down</span><br><span class="line">    up &#x3D; median + (n*1.4826*median)</span><br><span class="line">    down &#x3D; median - (n*1.4826*median)</span><br><span class="line"></span><br><span class="line">    # utiliser up&#x2F;down éliminer l&#39;extrême</span><br><span class="line">    factor &#x3D; np.where(factor &gt; up,up,factor)</span><br><span class="line">    factor &#x3D; np.where(factor &lt; down,down,factor)</span><br><span class="line"></span><br><span class="line">    return factor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fx_stand(factor):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    standardiser</span><br><span class="line">    input:  factor可以是带index的dataframe，返回也是dataframe。</span><br><span class="line">            不可以为panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">            假如有多列，输入单列数据[]如: fx_stand(fund[&quot;pe_ratio&quot;])</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    mean&#x3D; factor.mean()</span><br><span class="line">    std &#x3D; factor.std()</span><br><span class="line">    return (factor - mean)&#x2F;std</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># appeler fonction:(去极值 标准化)</span><br><span class="line">fund[&#39;ratio_mad&#39;]&#x3D; fx_mad(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line">fund[&#39;ratio_stand&#39;] &#x3D; fx_stand(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line"></span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
 <p>basic_earnings_per_share ratio_mad ratio_stand<br>
 date<br>
@@ -1043,7 +1045,7 @@ from alphalens import tears</p>
 </tbody>
 </table>
 <p>################   ####################</p>
-<h2 id="-3">################   ####################</h2>
+<h2 id="-2">################   ####################</h2>
 <hr>
 <h2 id="Modele-Fama-French-a-trois-facteurs">Modèle Fama-French à trois facteurs</h2>
 <!-- 公司规模变量{\displaystyle SMB}SMB是指由市值小的公司组成的投资组合回报与市值大的公司组成的投资组合回报之差，市净率溢价{\displaystyle HML}HML是账面价值比较高的公司组成的投资组合回报与比值较低的公司投资组合回报之差。{\displaystyle \alpha }\alpha 是超额收益率，在理想的情况下，投资组合的超额回报将全部被三因素解释，从而{\displaystyle \alpha }\alpha 应在统计学意义上等于0. -->
