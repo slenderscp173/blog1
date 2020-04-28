@@ -647,10 +647,427 @@ currency (dtype str) - ISO code representing the default currency of all price f
     
     <div class="article-entry" itemprop="articleBody">
       
-        Blog verrouillé.
-        
-          <a class="article-more-a" href="/2020/04/17/multifactor/#more">more >></a>
-        
+        <h3 id=""></h3>
+<p>pip install alphalens</p>
+<p>###（indépendant）1er paramètre : pour alphalens&lt; multi_series&gt;（factor）<br>
+à rechercher: facteurs &amp; varaible date<br>
+def: fx_get_all_data()<br>
+éliminer les données extrêmes + standardiser：fx_mad() + fx_std()<br>
+format=&gt; multi_series</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># 【input】 facteurs &amp; date ：</span><br><span class="line">#（à changer！）</span><br><span class="line">start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">end_date &#x3D; &#39;2017-05-31&#39;</span><br><span class="line">name &#x3D; [&#39;basic_earnings_per_share&#39;]</span><br><span class="line"></span><br><span class="line"># 【get】facteur-période (panel):</span><br><span class="line">def fx_get_all_date():</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    &#x3D;&#x3D;&gt; cumuler les données de chaque jour，établir les données complets(période)</span><br><span class="line">    &#x3D;&#x3D;&gt; 需完善问题： fund 是否需要改名？担心会和回测中的fund重名!!</span><br><span class="line">    ex：bénéfice par action &#x3D; basic_earnings_per_share</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import pandas as pd</span><br><span class="line"></span><br><span class="line">#     #（à changer！）</span><br><span class="line">#     start_date &#x3D; &#39;2017-01-01&#39;</span><br><span class="line">#     end_date &#x3D; &#39;2017-05-31&#39;</span><br><span class="line"></span><br><span class="line">    # 【get】tous les date-trading （关联的修改！）</span><br><span class="line">    alldate &#x3D; get_trading_dates(start_date &#x3D; start_date, end_date &#x3D; end_date)</span><br><span class="line"></span><br><span class="line">    # 1. get facteur: 基本每股收益 basic_earnings_per_share (默认全部A股)</span><br><span class="line"></span><br><span class="line">    fund&#x3D;pd.DataFrame()</span><br><span class="line">    for i in range(len(alldate)):</span><br><span class="line">        q &#x3D; query(fundamentals.income_statement.basic_earnings_per_share)</span><br><span class="line">        factor &#x3D; get_fundamentals(q,entry_date&#x3D; alldate[i]).iloc[:,0,:] #获取截面数据</span><br><span class="line">        factor[&#39;date&#39;] &#x3D; alldate[i] #新增单日日期列，直接增加在factor里</span><br><span class="line">        fund &#x3D; pd.concat([fund,factor]) #合并所有单日数据</span><br><span class="line">        #print(fund)</span><br><span class="line"></span><br><span class="line">    return fund</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># appeler fonction: fx_get_all_data():</span><br><span class="line">fund &#x3D; fx_get_all_date()</span><br><span class="line">fund &#x3D; fund.set_index([&#39;date&#39;,fund.index]) #订正：要重赋值给fund，否则fund不改变！！</span><br><span class="line">print(type(fund))</span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
+<p>Résultat :     &lt;class ‘pandas.core.frame.DataFrame’&gt;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center">basic_earnings_per_share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">date</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-03</td>
+<td style="text-align:center">000010.XSHE</td>
+<td style="text-align:center">0.0268</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000014.XSHE</td>
+<td style="text-align:center">-0.0869</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000006.XSHE</td>
+<td style="text-align:center">0.0848</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000008.XSHE</td>
+<td style="text-align:center">0.0367</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000012.XSHE</td>
+<td style="text-align:center">0.34</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000011.XSHE</td>
+<td style="text-align:center">-0.0121</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000007.XSHE</td>
+<td style="text-align:center">0.0502</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000009.XSHE</td>
+<td style="text-align:center">0.098</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">000001.XSHE</td>
+<td style="text-align:center">1.09</td>
+</tr>
+<tr>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-05-31</td>
+<td style="text-align:center">300630.XSHE</td>
+<td style="text-align:center">0.11</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">300652.XSHE</td>
+<td style="text-align:center">0.25</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">300498.XSHE</td>
+<td style="text-align:center">0.2822</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">300648.XSHE</td>
+<td style="text-align:center">0.11</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">300653.XSHE</td>
+<td style="text-align:center">0.13</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">300643.XSHE</td>
+<td style="text-align:center">0.06</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">[305384 rows x 1 columns]</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="-2"></h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># sur les données (periode)：&#x3D;&#x3D;&gt; éliminer l&#39;extrême &amp; standardiser</span><br><span class="line"></span><br><span class="line">def fx_mad(factor,n&#x3D;3):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    MAD méthode Écart Médian Absolu（median absolute deviation）:</span><br><span class="line">    输入：可以为带index的dataframe，返回dataframe。</span><br><span class="line">         不可以为Panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">         假如有多列，输入单列数据[]如: fx_mad(fund[&quot;pe_ratio&quot;])</span><br><span class="line"></span><br><span class="line">    MAD_e &#x3D; 1.4826*MAD</span><br><span class="line">    paramètre（n），normalement &#x3D; 3</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    import numpy as np</span><br><span class="line"></span><br><span class="line">    #1.trouver le médian du groupe des données</span><br><span class="line">    median &#x3D; np.median(factor)</span><br><span class="line">    mad &#x3D; np.median(abs(factor-median))# 2.求出因子与中位数的绝对差，并求出绝对差的中位数MAD</span><br><span class="line"></span><br><span class="line">    # limite up &amp; down</span><br><span class="line">    up &#x3D; median + (n*1.4826*median)</span><br><span class="line">    down &#x3D; median - (n*1.4826*median)</span><br><span class="line"></span><br><span class="line">    # utiliser up&#x2F;down éliminer l&#39;extrême</span><br><span class="line">    factor &#x3D; np.where(factor &gt; up,up,factor)</span><br><span class="line">    factor &#x3D; np.where(factor &lt; down,down,factor)</span><br><span class="line"></span><br><span class="line">    return factor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fx_stand(factor):</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    standardiser</span><br><span class="line">    input:  factor可以是带index的dataframe，返回也是dataframe。</span><br><span class="line">            不可以为panel，即‘时间段因子数据’需要处理后传入！</span><br><span class="line">            假如有多列，输入单列数据[]如: fx_stand(fund[&quot;pe_ratio&quot;])</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    mean&#x3D; factor.mean()</span><br><span class="line">    std &#x3D; factor.std()</span><br><span class="line">    return (factor - mean)&#x2F;std</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># appeler fonction:(去极值 标准化)</span><br><span class="line">fund[&#39;ratio_mad&#39;]&#x3D; fx_mad(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line">fund[&#39;ratio_stand&#39;] &#x3D; fx_stand(fund[&#39;basic_earnings_per_share&#39;])</span><br><span class="line"></span><br><span class="line">print(fund)</span><br></pre></td></tr></table></figure>
+<p>basic_earnings_per_share ratio_mad ratio_stand<br>
+date<br>
+2017-01-03 000010.XSHE                   0.0268    0.0268   -0.492691<br>
+000014.XSHE                  -0.0869   -0.0869   -0.768896<br>
+000006.XSHE                   0.0848    0.0848   -0.351795<br>
+000008.XSHE                   0.0367    0.0367   -0.468642<br>
+000012.XSHE                     0.34      0.34    0.268147<br>
+000011.XSHE                  -0.0121   -0.0121   -0.587189<br>
+000007.XSHE                   0.0502    0.0502   -0.435847<br>
+000009.XSHE                    0.098     0.098    -0.31973<br>
+000001.XSHE                     1.09  0.740356     2.09008<br>
+000002.XSHE                    0.748  0.740356     1.25928<br>
+000004.XSHE                    0.175     0.175   -0.132678</p>
+<p>…                                         …       …         …<br>
+2017-05-31 300630.XSHE                     0.11      0.11   -0.290579<br>
+300652.XSHE                     0.25      0.25   0.0495149<br>
+300498.XSHE                   0.2822    0.2822    0.127736<br>
+300648.XSHE                     0.11      0.11   -0.290579<br>
+300653.XSHE                     0.13      0.13   -0.241994<br>
+300643.XSHE                     0.06      0.06   -0.412041<br>
+300650.XSHE                     0.08      0.08   -0.363456<br>
+300514.XSHE                   0.1171    0.1171   -0.273331<br>
+300641.XSHE                     0.18      0.18   -0.120532<br>
+300604.XSHE                     0.07      0.07   -0.387748<br>
+300642.XSHE                     0.28      0.28    0.122392<br>
+300651.XSHE                   0.0346    0.0346   -0.473743<br>
+300649.XSHE                     0.11      0.11   -0.290579</p>
+<p>[305384 rows x 3 columns]</p>
+<h3 id="changer-format">changer format</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># changer format： MultiIndex.dataframe ---&gt; multiIndex.series (Alphalens) : 第一个参数准备好了multi_series</span><br><span class="line">multi_series &#x3D; fund[&#39;ratio_stand&#39;]</span><br><span class="line">print(type(multi_series))</span><br><span class="line">print(multi_series)</span><br></pre></td></tr></table></figure>
+<h3 id="independant-2er-parametre：tous-les-actions-close-valeur-：-price">(independant) 2er paramètre：tous les actions - close valeur ： (price)</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#2er paramètre：close price&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt; paramètre price</span><br><span class="line">all_stock &#x3D; all_instruments(type&#x3D;&#39;CS&#39;)</span><br><span class="line">all_stock_index &#x3D; all_stock[&#39;order_book_id&#39;]</span><br><span class="line">price &#x3D; get_price(list(all_stock_index),start_date &#x3D; start_date, end_date &#x3D; end_date,fields &#x3D;&#39;close&#39;) #注意：输入list. 注意设置fields</span><br><span class="line">price</span><br></pre></td></tr></table></figure>
+<p>Résultat (2er paramètre: stock price) :<br>
+<img src="https://github.com/slenderscp173/slenderscp173.github.io/blob/master/image/multi-facteur%201.png?raw=true" alt="multi-facteur 1"></p>
+<h3 id="（depende-les-2-parametres-avant）3er-processus：data-clean：utiliser-alphalens-obtenir-les-donnees-sous-format-alphalens-factor-data">（dépende les 2 paramètres avant）3er processus：data clean：utiliser alphalens obtenir les données sous format alphalens (factor_data)</h3>
+<p>def fx_alphalens_factor_data()<br>
+from alphalens import performance<br>
+from alphalens import plotting<br>
+from alphalens import utils<br>
+from alphalens import tears</p>
+<p>attention ！max_loss=0.xx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def alphalens_factor_data(multi_series,price,max_loss &#x3D; 0.3):</span><br><span class="line"></span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    alphalens :data_format pour calculer IC des facteurs</span><br><span class="line">    [input]: multi_series :date &amp; facteur</span><br><span class="line">             (dataframe) action price</span><br><span class="line">             max_loss: data loss max en %</span><br><span class="line">    def： éviter oublier le nom de fonction - alphalens</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    from alphalens import performance</span><br><span class="line">    from alphalens import plotting</span><br><span class="line">    from alphalens import utils</span><br><span class="line">    from alphalens import tears</span><br><span class="line"></span><br><span class="line">    # voici fonction originale du alphalens:</span><br><span class="line">    # &#x3D;&#x3D;&gt; utils.get_clean_factor_and_forward_returns(multi_series,price,max_loss &#x3D; max_loss)</span><br><span class="line">    factor_data &#x3D; utils.get_clean_factor_and_forward_returns(multi_series,price,max_loss &#x3D; max_loss) ## attention !!</span><br><span class="line">    return factor_data</span><br><span class="line"></span><br><span class="line"># alphalens_factor_data（）:</span><br><span class="line">factor_data &#x3D; alphalens_factor_data(multi_series, price,max_loss&#x3D;0.6) #(max_loss修改！！！)</span><br><span class="line">print(factor_data)</span><br></pre></td></tr></table></figure>
+<pre><code>            1D        5D       10D      factor  
+</code></pre>
+<p>date        asset<br>
+2017-01-03 000010.XSHE  0.005135 -0.010270 -0.116816   -0.492691<br>
+000014.XSHE  0.012825  0.009501 -0.108315   -0.768896<br>
+000006.XSHE  0.013453  0.009318 -0.116851   -0.351795<br>
+000008.XSHE  0.005353  0.013920 -0.069590   -0.468642<br>
+000012.XSHE  0.012282  0.033335 -0.015780    0.268147<br>
+000011.XSHE  0.012377  0.001548 -0.144920   -0.587189<br>
+000007.XSHE  0.014178 -0.050190 -0.087736   -0.435847<br>
+000009.XSHE  0.018166  0.015304 -0.082209    -0.31973<br>
+000001.XSHE  0.000000 -0.001092 -0.001092     2.09008<br>
+000002.XSHE  0.005790 -0.007234  0.003380     1.25928<br>
+000004.XSHE  0.005624 -0.026997 -0.159280   -0.132678<br>
+000005.XSHE  0.026354  0.026354 -0.051245   -0.251711<br>
+000016.XSHE  0.008772  0.019743 -0.039485   -0.602493<br>
+000017.XSHE  0.099922  0.071819 -0.098361   -0.548564<br>
+000018.XSHE  0.000954 -0.035271 -0.083895   -0.124176<br>
+000019.XSHE  0.014687  0.025093 -0.112606   -0.692618<br>
+000021.XSHE  0.011478  0.020878 -0.020878  -0.0566429<br>
+000022.XSHE  0.006725 -0.005173 -0.085360     1.05279<br>
+000023.XSHE -0.000631 -0.029976 -0.121172   -0.412041<br>
+000020.XSHE  0.004005  0.004005 -0.109924    -0.51917<br>
+000025.XSHE  0.008792 -0.001975 -0.088462   -0.343536<br>
+000026.XSHE  0.100141  0.134249 -0.020318   0.0419843<br>
+000027.XSHE  0.005784  0.026011 -0.017336    0.262073<br>
+000028.XSHE  0.008753  0.025222  0.024480     4.66264<br>
+000029.XSHE  0.000000  0.000000  0.000000     0.01089<br>
+000030.XSHE  0.003467 -0.010401 -0.073913    0.413901<br>
+000031.XSHE  0.004437 -0.003316 -0.093123   -0.460625<br>
+000032.XSHE  0.018816  0.094762 -0.004030   -0.229362<br>
+000033.XSHE  0.000000  0.000000  0.000000   -0.528644<br>
+000034.XSHE  0.017466 -0.027314 -0.093145    0.819584<br>
+…                          …       …       …         …<br>
+2017-05-15 300620.XSHE  0.029427 -0.059658 -0.071429   -0.204584<br>
+300628.XSHE  0.044693 -0.023802 -0.037219      4.0359<br>
+300637.XSHE  0.033573 -0.141697 -0.139574   -0.266286<br>
+300635.XSHE  0.024654 -0.081608 -0.101725   -0.290579<br>
+300636.XSHE  0.021896 -0.085523 -0.080628  -0.0053859<br>
+300603.XSHE  0.005824 -0.062567 -0.207195   -0.460625<br>
+300630.XSHE  0.040559 -0.043359 -0.017063   -0.290579<br>
+300498.XSHE -0.002103 -0.004559  0.050127    0.127736<br>
+300648.XSHE  0.016721 -0.181803 -0.181310   -0.290579<br>
+300643.XSHE  0.100271  0.611672  0.824065   -0.412041<br>
+300650.XSHE  0.100068 -0.014861 -0.008590   -0.363456<br>
+300514.XSHE  0.000785 -0.233187 -0.205185   -0.273331<br>
+300641.XSHE  0.029104 -0.118162 -0.100349   -0.120532<br>
+300604.XSHE -0.028752 -0.195286 -0.178041   -0.387748<br>
+300642.XSHE  0.039827  0.022498  0.022194    0.122392<br>
+300651.XSHE  0.100001  0.518340  0.350518   -0.473743<br>
+300649.XSHE  0.100122  0.610748  1.427387   -0.290579<br>
+300554.XSHE  0.012799 -0.127988 -0.112630 -0.00927268<br>
+601155.XSHG  0.011239  0.034390  0.134916    -0.50921<br>
+002827.XSHE  0.018955 -0.021105 -0.106811   -0.412041<br>
+300640.XSHE  0.021630 -0.094885 -0.111648   -0.138994<br>
+002826.XSHE  0.029582 -0.057374 -0.017929   -0.484918<br>
+001979.XSHE  0.006449  0.047285  0.077916   0.0980997<br>
+603429.XSHG  0.041842  0.077728  0.050847   -0.169117<br>
+603578.XSHG  0.021840 -0.073998 -0.058325  -0.0962395<br>
+603225.XSHG  0.012261 -0.088336 -0.088839    0.486778<br>
+300632.XSHE  0.009734 -0.183988 -0.216326   -0.238107<br>
+601200.XSHG  0.074142 -0.016070 -0.006211   -0.024334<br>
+300607.XSHE  0.049959 -0.048508 -0.041253    0.292439<br>
+001872.XSHE  0.041049 -0.035717  0.019294  -0.0379377</p>
+<h3 id="finale：-calculer-IC-du-facteur-IC">finale： calculer IC du facteur (IC)</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from alphalens import performance</span><br><span class="line">​</span><br><span class="line">IC &#x3D; performance.factor_information_coefficient(factor_data)</span><br><span class="line">print(IC)</span><br></pre></td></tr></table></figure>
+<p>resultat: IC</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">1D</th>
+<th style="text-align:center">5D</th>
+<th style="text-align:center">10D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">date</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-03</td>
+<td style="text-align:center">-0.010741</td>
+<td style="text-align:center">-0.146653</td>
+<td style="text-align:center">0.040953</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-04</td>
+<td style="text-align:center">-0.134529</td>
+<td style="text-align:center">-0.132191</td>
+<td style="text-align:center">0.032196</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-05</td>
+<td style="text-align:center">-0.114484</td>
+<td style="text-align:center">-0.085580</td>
+<td style="text-align:center">0.065862</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-06</td>
+<td style="text-align:center">-0.012071</td>
+<td style="text-align:center">0.002684</td>
+<td style="text-align:center">0.111769</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-09</td>
+<td style="text-align:center">-0.017594</td>
+<td style="text-align:center">0.109591</td>
+<td style="text-align:center">0.106330</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-10</td>
+<td style="text-align:center">-0.038469</td>
+<td style="text-align:center">0.151582</td>
+<td style="text-align:center">0.094991</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-11</td>
+<td style="text-align:center">0.050834</td>
+<td style="text-align:center">0.129614</td>
+<td style="text-align:center">0.158706</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-12</td>
+<td style="text-align:center">0.061765</td>
+<td style="text-align:center">0.149670</td>
+<td style="text-align:center">0.161348</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-13</td>
+<td style="text-align:center">0.195304</td>
+<td style="text-align:center">0.190609</td>
+<td style="text-align:center">0.148079</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-16</td>
+<td style="text-align:center">0.054215</td>
+<td style="text-align:center">-0.012822</td>
+<td style="text-align:center">0.029101</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-17</td>
+<td style="text-align:center">-0.064867</td>
+<td style="text-align:center">-0.067360</td>
+<td style="text-align:center">-0.045059</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-18</td>
+<td style="text-align:center">0.087092</td>
+<td style="text-align:center">0.067112</td>
+<td style="text-align:center">0.012667</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-19</td>
+<td style="text-align:center">0.063264</td>
+<td style="text-align:center">0.028293</td>
+<td style="text-align:center">-0.020565</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-20</td>
+<td style="text-align:center">-0.071927</td>
+<td style="text-align:center">-0.018567</td>
+<td style="text-align:center">-0.080776</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-23</td>
+<td style="text-align:center">-0.044003</td>
+<td style="text-align:center">0.098339</td>
+<td style="text-align:center">0.001132</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-24</td>
+<td style="text-align:center">0.231561</td>
+<td style="text-align:center">0.036610</td>
+<td style="text-align:center">0.044358</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-25</td>
+<td style="text-align:center">0.006677</td>
+<td style="text-align:center">-0.039875</td>
+<td style="text-align:center">0.004546</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-01-26</td>
+<td style="text-align:center">-0.082067</td>
+<td style="text-align:center">-0.046142</td>
+<td style="text-align:center">-0.027973</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-02-03</td>
+<td style="text-align:center">0.107229</td>
+<td style="text-align:center">-0.060391</td>
+<td style="text-align:center">-0.016436</td>
+</tr>
+<tr>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-05-09</td>
+<td style="text-align:center">0.083141</td>
+<td style="text-align:center">0.203355</td>
+<td style="text-align:center">0.133788</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-05-10</td>
+<td style="text-align:center">0.256761</td>
+<td style="text-align:center">0.155082</td>
+<td style="text-align:center">0.128266</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-05-11</td>
+<td style="text-align:center">0.106893</td>
+<td style="text-align:center">0.002917</td>
+<td style="text-align:center">0.056482</td>
+</tr>
+<tr>
+<td style="text-align:center">2017-05-12</td>
+<td style="text-align:center">-0.007908</td>
+<td style="text-align:center">-0.085600</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">2017-05-15</td>
+<td style="text-align:center">0.030404</td>
+<td style="text-align:center">-0.032463</td>
+<td style="text-align:center">0.062061</td>
+</tr>
+<tr>
+<td style="text-align:center">[87 rows x 3 columns]</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<p>################   ####################</p>
+<h2 id="-3">################   ####################</h2>
+<hr>
+<h2 id="Modele-Fama-French-a-trois-facteurs">Modèle Fama-French à trois facteurs</h2>
+<!-- 公司规模变量{\displaystyle SMB}SMB是指由市值小的公司组成的投资组合回报与市值大的公司组成的投资组合回报之差，市净率溢价{\displaystyle HML}HML是账面价值比较高的公司组成的投资组合回报与比值较低的公司投资组合回报之差。{\displaystyle \alpha }\alpha 是超额收益率，在理想的情况下，投资组合的超额回报将全部被三因素解释，从而{\displaystyle \alpha }\alpha 应在统计学意义上等于0. -->
+<p>La formule proposée pour décrire le rendement espéré est1 :<br>
+$$<br>
+{\displaystyle E(R_{i})-R_{F}=b_{i}[E(R_{M})-R_{F}]+s_{i}E(SMB)+h_{i}E(HML)}{\displaystyle E(R_{i})-R_{F}=b_{i}[E(R_{M})-R_{F}]+s_{i}E(SMB)+h_{i}E(HML)}<br>
+$$</p>
+<p>Le modèle CAPM implique des valeurs nulles pour {\displaystyle a_{i},s_{i}}{\displaystyle a_{i},s_{i}} et {\displaystyle h_{i}}{\displaystyle h_{i}}.</p>
+<p>Le modèle de Fama et French est compatible avec le modèle d’évaluation par arbitrage (APT) qui dit que le rendement espéré d’un actif financier est une fonction linéaire de la sensibilité des facteurs de risque qui influencent ce titre. Il indique les trois facteurs à retenir.</p>
+<h3 id="Modele-d’evaluation-des-actifs-financiers-MEDAF">Modèle d’évaluation des actifs financiers (MEDAF)</h3>
+<p>Capital Asset Pricing Model (CAPM)<br>
+$$<br>
+{\displaystyle E(R_{actif})=R_{F}+\beta_{actif}\cdot [E(R_{M})-R_{F}]}<br>
+$$<br>
+Le {\displaystyle \beta_{actif},}{\displaystyle \beta_{actif},} est la volatilité de la rentabilité de l’actif<br>
+{\displaystyle \beta_{actif}={\frac {cov(R_{M},R_{actif})}{var(R_{M})}}}</p>
+<h3 id="Modele-d’evaluation-par-arbitrage">Modèle d’évaluation par arbitrage</h3>
+<p>Arbitrage pricing theory (APT).Pour lutter contre l’instabilité des bétas du MEDAF, le modèle MEA introduit des facteurs macroéconomiques et spécifiques.<br>
+La méthode d’évaluation par arbitrage (MEA) peut se décrire sous cette forme mathématique :<br>
+{\displaystyle E(R_{i})=R_{F}+b_{i1}({\bar {R}}<em>{1}-R</em>{F})+b_{i2}({\bar {R}}<em>{2}-R</em>{F})+…+b_{im}({\bar {R}}<em>{m}-R</em>{F})}{\displaystyle E(R_{i})=R_{F}+b_{i1}({\bar {R}}<em>{1}-R</em>{F})+b_{i2}({\bar {R}}<em>{2}-R</em>{F})+…+b_{im}({\bar {R}}<em>{m}-R</em>{F})}</p>
+<h4 id="vocabulaire">vocabulaire</h4>
+<p>fonds d’arbitrage 对冲基金<br>
+（Price-to-Book Ratio, PBR, P/B）股票的市净率</p>
+
       
 
       
@@ -663,11 +1080,11 @@ currency (dtype str) - ISO code representing the default currency of all price f
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">locked</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">quant</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">quant</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">finance</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -1581,6 +1998,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">quant</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">finance</a>
               </li>
              
               <li class="article-tag-list-item">
