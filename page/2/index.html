@@ -168,6 +168,133 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-博客创建&amp;报错汇总" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA&%E6%8A%A5%E9%94%99%E6%B1%87%E6%80%BB/">create your github pages</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA&%E6%8A%A5%E9%94%99%E6%B1%87%E6%80%BB/" class="archive-article-date">
+  	<time datetime="2020-04-16T09:42:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
+</a>
+
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="创建">创建</h3>
+<p>1.install : node.js<br>
+Voici lien de node.js: <a href="https://nodejs.org/dist/v9.11.1/node-v9.11.1-x64.msi" target="_blank" rel="noopener">node.js download</a></p>
+<p>2.install : npm<br>
+Taper ces codes dans le terminal:<br>
+<code>sudo npm install -g hexo</code></p>
+<p>3.install: git<br>
+<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">install git</a><br>
+<code>git -version</code></p>
+<p>4.[initialisation] run hexo init :</p>
+<p><code>cd &lt;blog&gt;</code><br>
+<code>npx hexo init</code></p>
+<h4 id="Il-faut-rajouter-npx-pour-initialisation">Il faut rajouter npx pour initialisation !!</h4>
+<h3 id="访问统计">访问统计</h3>
+<p>主题config文件添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Show Views&#x2F;Visitors of the website&#x2F;page with busuanzi. 访问人数统计</span><br><span class="line"># Get more information on http:&#x2F;&#x2F;ibruce.info&#x2F;2015&#x2F;04&#x2F;04&#x2F;busuanzi</span><br><span class="line">busuanzi_count:</span><br><span class="line">  enable: true</span><br><span class="line">  total_visitors: true</span><br><span class="line">  total_visitors_icon: user</span><br><span class="line">  total_views: true</span><br><span class="line">  total_views_icon: eye</span><br><span class="line">  post_views: true</span><br><span class="line">  post_views_icon: eye</span><br></pre></td></tr></table></figure>
+<p>layout/footer.ejs文件中添加如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (theme.busuanzi &amp;&amp; theme.busuanzi.enable)&#123; %&gt;</span><br><span class="line">        &lt;!-- 不蒜子统计 --&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_container_site_pv&quot;&gt;</span><br><span class="line">                本站总访问量&lt;span id&#x3D;&quot;busuanzi_value_site_pv&quot;&gt;&lt;&#x2F;span&gt;次</span><br><span class="line">        &lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span class&#x3D;&quot;post-meta-divider&quot;&gt;|&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_container_site_uv&quot; style&#x3D;&#39;display:none&#39;&gt;</span><br><span class="line">                本站访客数&lt;span id&#x3D;&quot;busuanzi_value_site_uv&quot;&gt;&lt;&#x2F;span&gt;人</span><br><span class="line">        &lt;&#x2F;span&gt;</span><br><span class="line">        &lt;script async src&#x3D;&quot;&#x2F;&#x2F;busuanzi.ibruce.info&#x2F;busuanzi&#x2F;2.3&#x2F;busuanzi.pure.mini.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>在yilia/layout/partial/post/date 中添加代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (theme.busuanzi &amp;&amp; theme.busuanzi.enable &amp;&amp; !index)&#123; %&gt;</span><br><span class="line">        &lt;!-- 不蒜子统计 --&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_container_page_pv&quot; style&#x3D;&#39;display:none&#39; class&#x3D;&quot;&lt;%&#x3D; class_name %&gt;&quot;&gt;</span><br><span class="line">              &lt;i class&#x3D;&quot;icon-smile icon&quot;&gt;&lt;&#x2F;i&gt; 阅读数：&lt;span id&#x3D;&quot;busuanzi_value_page_pv&quot;&gt;&lt;&#x2F;span&gt;次</span><br><span class="line">        &lt;&#x2F;span&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="problem-问题与报错汇总">problem 问题与报错汇总</h3>
+<p>1.tags标签: utiliser list [ ] pour séparer les tags<br>
+<code>tags: [blog, github pages]</code></p>
+<hr>
+<p>2.创建了多条目录menu，不能直接将_post中的md文件直接复制过去，否则报错。如下：</p>
+<h2 id="￼3"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ERROR &#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;page.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;%- partial(&#39;_partial&#x2F;article&#39;, &#123;post: page, index: false&#125;) %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;_partial&#x2F;article.ejs:61</span><br><span class="line">    59|         &lt;&#x2F;div&gt;</span><br><span class="line">    60|       &lt;% &#125; %&gt;</span><br><span class="line"> &gt;&gt; 61|       &lt;%- partial(&#39;post&#x2F;tag&#39;) %&gt;</span><br><span class="line">    62|       &lt;%- partial(&#39;post&#x2F;category&#39;) %&gt;</span><br><span class="line">    63|       &lt;% if (index &amp;&amp; theme.show_all_link)&#123; %&gt;</span><br><span class="line">    64|         &lt;p class&#x3D;&quot;article-more-link&quot;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;_partial&#x2F;post&#x2F;tag.ejs:7</span><br><span class="line">    5|                  &lt;% post.tags.forEach(function(tag, i)&#123; %&gt;</span><br><span class="line">    6|                  &lt;li class&#x3D;&quot;article-tag-list-item&quot;&gt;</span><br><span class="line"> &gt;&gt; 7|                          &lt;a href&#x3D;&quot;javascript:void(0)&quot; class&#x3D;&quot;js-tag article-tag-list-link color&lt;%&#x3D; tag.name.length % 5 + 1 %&gt;&quot;&gt;&lt;%-tag.name%</span><br><span class="line">&gt;&lt;&#x2F;a&gt;</span><br><span class="line">    8|                  &lt;&#x2F;li&gt;</span><br><span class="line">    9|                  &lt;% &#125;) %&gt;</span><br><span class="line">    10|                 &lt;&#x2F;ul&gt;</span><br><span class="line"></span><br><span class="line">Cannot read property &#39;length&#39; of undefined</span><br><span class="line">TypeError: &#x2F;Users&#x2F;sumail&#x2F;Desktop&#x2F;github&#x2F;themes&#x2F;yilia&#x2F;layout&#x2F;page.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;%- partial(&#39;_partial&#x2F;article&#39;, &#123;post: page, index: false&#125;) %&gt;</span><br></pre></td></tr></table></figure></h2>
+<p>3.翻页报错(未解决)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Next &amp;raquo;</span><br></pre></td></tr></table></figure>
+<p>转义字符，意义，字符<br>
+  空格<br>
+&lt; 小于 &lt;<br>
+&gt; 大于 &gt;<br>
+« 双小于  &lt;&lt;<br>
+» 双大于 &gt;&gt;</p>
+<p>解决办法：提议 <a href="https://github.com/litten/hexo-theme-yilia/issues/855" target="_blank" rel="noopener">https://github.com/litten/hexo-theme-yilia/issues/855</a><br>
+1.降低hexo版本就行，但是降低版本会有其他一些小问题<br>
+2.在\themes\yilia\layout_partial 文件夹下面，把所有的 &amp;laquo &amp;raquo 改成 &amp;lt &amp;gt</p>
+<hr>
+<p>4.文档分类至自定义导航菜单 （categories）</p>
+<p>解决连接: <a href="https://opsnotes.net/post/others/hexo-%E6%96%B0%E5%BB%BA%E8%8F%9C%E5%8D%95menu-%E5%AD%98%E6%94%BE%E5%BD%92%E6%A1%A3%E6%96%87%E7%AB%A0/" target="_blank" rel="noopener">lien</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>创建自定义导航菜单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">    home: &#x2F;home&#x2F;</span><br><span class="line">    quant: &#x2F;categories&#x2F;quant&#x2F;</span><br></pre></td></tr></table></figure>
+<p>新建md文档 QUANT：<br>
+在categories分类下填写将要分类的导航菜单名，无引号或括号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: QUANT</span><br><span class="line">date: 2020</span><br><span class="line">tags:</span><br><span class="line">categories: quant</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">github pages</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA&%E6%8A%A5%E9%94%99%E6%B1%87%E6%80%BB/">voir tout - 全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-markdown langue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -641,6 +768,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">math</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vie</a>
               </li>
             
             <div class="clearfix"></div>
