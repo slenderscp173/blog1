@@ -180,6 +180,195 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-【python】pyecharts kline" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/04/%E3%80%90python%E3%80%91pyecharts%20kline/">【python pyecharts】</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/04/%E3%80%90python%E3%80%91pyecharts%20kline/" class="archive-article-date">
+  	<time datetime="2020-12-04T07:56:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
+</a>
+
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/04/%E3%80%90python%E3%80%91pyecharts%20kline/">voir tout - 全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【python】guide_eikon_DSWS_API" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/03/%E3%80%90python%E3%80%91guide_eikon_DSWS_API/">【python_DAWS】eikon - Datastream Web Service - API</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/03/%E3%80%90python%E3%80%91guide_eikon_DSWS_API/" class="archive-article-date">
+  	<time datetime="2020-12-03T17:43:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
+</a>
+
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Sadly, refinitiv student version has no aceess to API.</p>
+<h2 id="DatastreamDSWS">DatastreamDSWS</h2>
+<ul>
+<li>Python wrapper for the Datastream Web Services API (DSWS)</li>
+</ul>
+<p>To Connect to the Refinitiv Datastream database via Datastream Web Services, you need to have a Datastream subscription and a username/password to use this package.<br>
+Please note that this is an official beta package.<br>
+For support on this package, please contact Refinitiv team.<br>
+This package includes all functionalities required to get data from Datastream, in the form of Python dataframes.<br>
+The package by default refers to <a href="https://product.datstream.com" target="_blank" rel="noopener">https://product.datstream.com</a>. In case you need to change this to other url or Delivery Direct ip, the config file can be used and the path of the config file needs to be provided in the code (Refer below on configuring url path). Please refer Appendix 2 for config details.</p>
+<h5 id="Software-Requirements">Software Requirements:</h5>
+<ul>
+<li>
+<p>Install Python 3 or higher versions.</p>
+</li>
+<li>
+<p>Python Packages to be installed:  Pandas, requests, Urllib3, datetime, pytz. (data + web connect)</p>
+</li>
+<li>
+<p>tips: terminal <code>&gt;&gt;&gt; pip list </code> to check Packages installed.</p>
+</li>
+</ul>
+<h5 id="Usage">Usage</h5>
+<p>DatastreamDSWS – Package installation:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; pip install DatastreamDSWS</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+<p>Import the package in the code and get data. (Example given below)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import DatastreamDSWS as dsws</span><br></pre></td></tr></table></figure>
+<p>Configuring URL Path (If different from <a href="https://product.datastream.com" target="_blank" rel="noopener">https://product.datastream.com</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ds &#x3D; dsws.Datastream(username&#x3D;&#39;XXXXXXX&#39;, password&#x3D;&#39;XXXXXXX&#39;, config&#x3D;&#39;&lt;your config path&gt;&#39;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Authenticate and use get_data to request data</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ds &#x3D; dsws.Datastream(username&#x3D;&#39;XXXXXXX&#39;, password&#x3D;&#39;XXXXXXX&#39;)</span><br><span class="line">df &#x3D; ds.get_data(tickers&#x3D;&#39;VOD&#39;,fields&#x3D;[&#39;P&#39;],start &#x3D;&#39;2017-01-01&#39;,end &#x3D; &#39;-5D&#39;)</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">API</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/quant//" class="article-tag-list-link color1">quant</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/quant/risk//" class="article-tag-list-link color5">risk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/03/%E3%80%90python%E3%80%91guide_eikon_DSWS_API/">voir tout - 全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-python-hedge-portfolio-sensitivity" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1047,196 +1236,6 @@ Friday: Japan CPI; Eurozone consumer confidence</p>
 
 
   
-    <article id="post-gretl-econometrics" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/04/gretl-econometrics/">[gretl] econometrics</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/04/gretl-econometrics/" class="archive-article-date">
-  	<time datetime="2020-09-04T07:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-04</time>
-</a>
-
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Basic operations with OLS:</p>
-        
-          <a class="article-more-a" href="/2020/09/04/gretl-econometrics/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">econometrics</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/04/gretl-econometrics/">voir tout - 全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-projet_酒店爬虫" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/03/projet_%E9%85%92%E5%BA%97%E7%88%AC%E8%99%AB/">【projet - collecter les prix des hôtels - yield management】</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/03/projet_%E9%85%92%E5%BA%97%E7%88%AC%E8%99%AB/" class="archive-article-date">
-  	<time datetime="2020-05-03T20:02:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Plan">Plan</h3>
-<p>Objectif: collecter les prix une fois chauqe jour, analyser le tarification différenciée.<br>
-Période: un mois / trois mois / six mois / un an<br>
-resource: booking / Agoda /</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Hôtel</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">ibis</td>
-</tr>
-<tr>
-<td style="text-align:center">InterContinental Hotels Group</td>
-</tr>
-<tr>
-<td style="text-align:center">city apartment</td>
-</tr>
-</tbody>
-</table>
-        
-          <a class="article-more-a" href="/2020/05/03/projet_%E9%85%92%E5%BA%97%E7%88%AC%E8%99%AB/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/locked//" class="article-tag-list-link color2">locked</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/03/projet_%E9%85%92%E5%BA%97%E7%88%AC%E8%99%AB/">voir tout - 全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &gt;</a>
@@ -1424,6 +1423,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">recovery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">API</a>
               </li>
             
             <div class="clearfix"></div>
