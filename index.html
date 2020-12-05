@@ -175,6 +175,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-111" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/06/111/">111</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/06/111/" class="archive-article-date">
+  	<time datetime="2020-12-05T23:11:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-06</time>
+</a>
+
+
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>React Code View</h1>
+<h2 id="背景">背景</h2>
+<p>让 Markdown 中的代码可以实时运行，为什么会有这样一个需求？</p>
+<p>很多前端团队技术相关的文档都采用 Markdown 编写， 文档中往往会伴随很多示例代码，我们希望大家在阅读文档的时候，可以运行示例代码，看到效果。</p>
+<h2 id="特性">特性</h2>
+<ul>
+<li>Markdown 中的代码可以运行，并预览效果</li>
+<li>代码可以在线编辑</li>
+<li>不影响整个文档流的布局</li>
+<li>支持 React, 支持代码高亮</li>
+</ul>
+<h2 id="演示">演示</h2>
+<!--start-code-->
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> instance = <span class="xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Test<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span>;</span><br><span class="line">ReactDOM.render(instance);</span><br></pre></td></tr></table></figure>
+<!--end-code-->
+<blockquote>
+<p>可以试着手动修改代码</p>
+</blockquote>
+<h2 id="示例代码">示例代码</h2>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> CodeView <span class="keyword">from</span> <span class="string">&#x27;react-code-view&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;react-code-view/lib/less/index.less&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">&#x27;rsuite&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;CodeView dependencies=&#123;&#123; Button &#125;&#125; &gt;</span><br><span class="line">  &#123;<span class="built_in">require</span>(<span class="string">&#x27;./example.md&#x27;</span>)&#125;</span><br><span class="line">&lt;/CodeView&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="API">API</h2>
+<h3 id="theme-string"><code>theme</code> <code>string</code></h3>
+<p>设置主题，可选项： ‘light’, ‘dark’</p>
+<p>默认值：‘light’</p>
+<h3 id="dependencies-Object"><code>dependencies</code> <code>Object</code></h3>
+<p>依赖的资源</p>
+<h3 id="showCode-boolean"><code>showCode</code> <code>boolean</code></h3>
+<p>显示代码</p>
+<p>默认值: true</p>
+<h3 id="babelTransformOptions-Object"><code>babelTransformOptions</code> <code>Object</code></h3>
+<p>babel 配置参数 <a target="_blank" rel="noopener" href="https://babeljs.io/docs/usage/api/#options">options</a></p>
+<p>默认值: { presets: [‘stage-0’, ‘react’, ‘es2015’] }</p>
+<h2 id="源码">源码</h2>
+<ul>
+<li>Github: <a target="_blank" rel="noopener" href="https://github.com/simonguo/react-code-view">react-code-view</a></li>
+<li>Markdown 源文件: <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/simonguo/react-code-view/master/docs/example.md">example.md</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/06/111/">voir tout - 全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-【python】pyecharts kline" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1120,102 +1222,6 @@ Friday: Japan CPI; Eurozone consumer confidence</p>
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/23/bond-pricing/">voir tout - 全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2020-09-23" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/23/2020-09-23/">2020/09/21-27</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/23/2020-09-23/" class="archive-article-date">
-  	<time datetime="2020-09-22T23:21:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-23</time>
-</a>
-
-
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="Some-of-China’s-best-reformers-are-indexes">Some of China’s best reformers are indexes</h2>
-<p>HONG KONG, Sept 25 (Reuters Breakingviews) - Want to make friends and influence Chinese regulators? Ask a global bond or equity index manager. FTSE Russell has said it will begin including Chinese state debt in its mighty World Government Bond Index in 2021. As with inclusion in benchmark stock indices, mainland officials have made big changes to win acceptance.</p>
-<p>An estimated $2.5 trillion of funds follow the WGBI benchmark. Analysts forecast that China inclusion will, over time, push at least $140 billion of foreign money into the local markets. The accommodations local officials have made to start those funds flowing include eased settlement cycles and extended trading hours. They are big changes, so FTSE plans to wait six more months after they are put into place before granting final approval.</p>
-<p>WGBI is the last, and most important, of the three big bond indices to include China. Inclusion impact from the others has already helped double inflows so far this year to about $90 billion, according to HSBC. China’s increasingly juicy returns have not hurt either: Ten-year bonds yield 2.7%, compared with 0.6% for their U.S. equivalent, and the yuan is rallying too. Of WGBI’s constituents, China currently offers the second-highest yield after Mexico, says Goldman Sachs.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">breakingviews</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">news</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/daily//" class="article-tag-list-link color1">daily</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/23/2020-09-23/">voir tout - 全文 >></a>
         </p>
       
 
